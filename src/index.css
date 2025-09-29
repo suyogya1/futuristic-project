@@ -1,0 +1,58 @@
+:root {
+  --bg: #0b1020;
+  --panel: #111632;
+  --text: #e7ecff;
+  --muted: #a7b0d6;
+  --brand: #6c7cff;
+  --brand-2: #7ee7ff;
+  --ring: rgba(124, 139, 255, 0.45);
+  --maxw: 1100px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 70% -10%, rgba(108,124,255,0.25), transparent 60%),
+              radial-gradient(800px 500px at -10% 20%, rgba(126,231,255,0.12), transparent 60%),
+              var(--bg);
+}
+
+a { color: inherit; text-decoration: none; }
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+/* Nav */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: saturate(140%) blur(10px);
+  background: rgba(11,16,32,0.6); border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { font-weight: 800; letter-spacing: 0.3px; }
+.links { display: flex; gap: 22px; }
+.links a { color: var(--muted); }
+.links a:hover { color: var(--text); }
+.menu { display: none; background: transparent; border: 0; color: var(--text); font-size: 20px; }
+
+
+/* Footer */
+.footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 30px 0; margin-top: 60px; }
+.foot-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; }
+.foot-links { display: flex; gap: 16px; color: var(--muted); }
+.foot-links a:hover { color: var(--text); }
+.foot-copy { color: var(--muted); grid-column: 1 / -1; }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .grid3, .steps { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .links { display: none; }
+  .links.open { display: flex; position: absolute; right: 20px; top: 64px; background: rgba(11,16,32,0.95); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 10px; flex-direction: column; gap: 12px; }
+  .menu { display: inline-block; }
+  .cta-inner { flex-direction: column; align-items: start; }
+}
