@@ -1,30 +1,13 @@
 import React, { useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 export default function ConnectWalletModal({ open, onClose }) {
-  const { connect, connecting, connected, wallets, wallet, select } = useWallet();
-
-  const phantomAdapter = wallets.find((w) => /phantom/i.test(w.adapter?.name || ""));
+  const { connected } = useWallet();
 
   useEffect(() => {
     if (connected && open) onClose?.();
   }, [connected, open, onClose]);
-
-  const hasPhantom =
-    typeof window !== "undefined" &&
-    (window.phantom?.solana?.isPhantom || window.solana?.isPhantom);
-
-  const handleConnect = async () => {
-    try {
-      if (phantomAdapter?.adapter && wallet?.adapter?.name !== phantomAdapter.adapter.name) {
-        await select(phantomAdapter.adapter.name);
-      }
-      await connect(); // This will open Phantom and show the password prompt there
-    } catch (e) {
-      // error is surfaced below; Phantom rejections are common if user cancels
-      console.error("Connect error:", e);
-    }
-  };
 
   if (!open) return null;
 
@@ -32,49 +15,34 @@ export default function ConnectWalletModal({ open, onClose }) {
     <div className="cw-overlay" role="dialog" aria-modal="true" aria-labelledby="cw-title">
       <div className="cw-modal">
         <div className="cw-header">
-          <h3 id="cw-title">Connect your Phantom Wallet</h3>
+          <h3 id="cw-title">Connect your wallet</h3>
           <button className="cw-x" onClick={onClose} aria-label="Close">×</button>
         </div>
 
         <div className="cw-body">
           <ol className="cw-steps">
-            <li className={hasPhantom ? "done" : ""}>
+            <li className="done">
               <span className="num">1</span>
-              {hasPhantom ? "Phantom detected" : (
-                <>
-                  Install&nbsp;
-                  <a href="https://phantom.app/download" target="_blank" rel="noreferrer">
-                    Phantom
-                  </a>
-                  , then return here.
-                </>
-              )}
+              Open the wallet selector
             </li>
-            <li className={connecting ? "active" : ""}>
+            <li>
               <span className="num">2</span>
-              Click “Connect Phantom” below
+              Choose your wallet (Phantom, Solflare, etc.)
             </li>
             <li>
               <span className="num">3</span>
-              Approve in Phantom — **enter your password** in the Phantom window
-              (we never see it)
+              Approve the connection in your wallet window
             </li>
           </ol>
 
-          <div className="cw-actions">
-            <button
-              className="btn primary lg"
-              onClick={handleConnect}
-              disabled={!hasPhantom || connecting}
-            >
-              {connecting ? "Waiting for Phantom…" : "Connect Phantom"}
-            </button>
-            <button className="btn ghost" onClick={onClose}>Cancel</button>
+          <div className="cw-actions" style={{ gap: 12 }}>
+            {/* One nice button that opens the wallet-adapter modal */}
+            <WalletMultiButton className="btn primary lg" />
+            <button className="btn ghost" onClick={onClose} type="button">Cancel</button>
           </div>
 
           <p className="cw-note">
-            We never ask for your seed phrase or password. Authentication is handled
-            inside the Phantom extension/app.
+            We never ask for your seed phrase or password. Authentication happens in your wallet.
           </p>
         </div>
       </div>

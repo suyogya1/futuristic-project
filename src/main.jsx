@@ -1,13 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App.jsx";                
 import "./index.css";
-import WalletConnectionProvider from "./solana/walletConnectionProvider.jsx";
+import WalletConnectionProvider from "./solana/walletConnectionProvider.jsx"; 
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <WalletConnectionProvider network="mainnet-beta">
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </WalletConnectionProvider>
   </React.StrictMode>
 );

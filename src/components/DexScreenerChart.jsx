@@ -1,37 +1,34 @@
-import React, { useEffect, useRef } from "react";
+// src/components/DexScreenerChart.jsx
+import React from "react";
 
 /**
- * DexScreenerChart
- * @param {string} pairPath e.g. "ethereum/0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"
- * @param {"dark"|"light"} theme
- * @param {number|string} height 
+ * DexScreener embed
+ * @param {string} pairPath  e.g. "solana/8HoQnePLqPj4M7PUDzfw8e3Ymdwgc7NLGnaTUapubyvu"  (Raydium RAY/USDC)
+ *                           or  "ethereum/0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc" (Uniswap V2 WETH/USDC)
+ * @param {string} theme     "dark" | "light"
+ * @param {number|string} height   CSS height, e.g. 560 or "560px"
  */
-export default function DexScreenerChart({ pairPath, theme = "dark", height = 560 }) {
-  const iframeRef = useRef(null);
-  const src = `https://dexscreener.com/${pairPath}?embed=1&theme=${theme}`;
-
-  // optional: auto-resize on window changes (helps mobile)
-  useEffect(() => {
-    const onResize = () => {
-      if (iframeRef.current) {
-        iframeRef.current.style.height = typeof height === "number" ? `${height}px` : String(height);
-        iframeRef.current.style.width = "100%";
-      }
-    };
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [height]);
+export default function DexScreenerChart({
+  pairPath,
+  theme = "dark",
+  height = 560,
+}) {
+  const h = typeof height === "number" ? `${height}px` : height;
+  const src = `https://www.dexscreener.com/${pairPath}?embed=1&theme=${theme}`;
 
   return (
-    <div style={{ width: "100%", borderRadius: 12, overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
+    <div
+      style={{
+        borderRadius: 16,
+        overflow: "hidden",
+        border: "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
       <iframe
-        ref={iframeRef}
-        title="DEX Screener Chart"
+        title="DexScreener Chart"
         src={src}
-        style={{ width: "100%", height: typeof height === "number" ? `${height}px` : String(height), border: 0 }}
-        loading="lazy"
-        allow="clipboard-write; fullscreen"
+        style={{ width: "100%", height: h, border: 0 }}
+        allow="clipboard-write; clipboard-read; fullscreen"
       />
     </div>
   );

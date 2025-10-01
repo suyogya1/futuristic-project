@@ -1,64 +1,36 @@
-import { useState } from "react";
-import "./index.css";
-import DexScreenerChart from "./components/DexScreenerChart";
-import ConnectWallet from "./components/connectWallet";
-import BuySellUI from "./sections/BuySellUI";
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Landing from "./pages/Landing.jsx";
+import BuySell from "./pages/BuySell.jsx";
+import Axiom from "./pages/axiom.jsx";
+import Rewards from "./pages/rewards.jsx";
 
 function Nav() {
-  const [open, setOpen] = useState(false);
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <div className="brand">Tit Coin</div>
-        <nav className={`links ${open ? "open" : ""}`}>
-          {/* fixed anchor to match section id */}
-          <a href="#buy-sell">Buy / Sell Coin</a>
+        <div className="brand">
+          <Link to="/" style={{ textDecoration: "none" }}>One For All </Link>
+        </div>
+        <nav className="links">
+          <a href="/buy-sell" target="_blank" rel="noopener noreferrer">Buy / Sell Coin</a>
+          <a href="/axiom" target="_blank" rel="noopener noreferrer">Axiom-like</a>
+          <a href="/rewards" target="_blank" rel="noopener noreferrer">Rewards</a>
         </nav>
-        <button className="menu" onClick={() => setOpen(!open)} aria-label="Menu">
-          ☰
-        </button>
+        <button className="menu" aria-label="Menu">☰</button>
       </div>
     </header>
   );
 }
 
-function LiveChartSection() {
-  const pairPath = "ethereum/0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc";
-  return (
-    <section id="live-demo" className="section">
-      <div className="container">
-        <h2 className="section-title">Live DEX Chart</h2>
-        <DexScreenerChart pairPath={pairPath} theme="dark" height={560} />
-      </div>
-    </section>
-  );
-}
-
-function Web3Section() {
-  return (
-    <section id="wallet" className="section alt">
-      <div className="container">
-        <h2 className="section-title">Connect your Phantom wallet</h2>
-        <p className="section-sub">
-          Try it on <strong>devnet</strong>: connect, view your address, refresh SOL balance, and sign a test message.
-        </p>
-        <ConnectWallet />
-      </div>
-    </section>
-  );
-}
-
+// function
 
 function Footer() {
   return (
     <footer className="footer">
       <div className="container foot-inner">
-        <div className="brand">TitCoin</div>
-        <div className="foot-links">
-          <a href="#privacy">Privacy</a>
-          <a href="#terms">Terms</a>
-        </div>
-        <div className="foot-copy">© {new Date().getFullYear()} Tit Coin. All rights reserved.</div>
+        <div className="brand">One For All</div>
+        <div className="foot-copy">© {new Date().getFullYear()} One For All. All rights reserved.</div>
       </div>
     </footer>
   );
@@ -68,9 +40,12 @@ export default function App() {
   return (
     <>
       <Nav />
-      <LiveChartSection />
-      <BuySellUI tokenSymbol="TIT" tokenName="Tit Coin" tokenPriceUsd={0.1234} />
-      <Web3Section />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/buy-sell" element={<BuySell />} />
+        <Route path="/axiom" element={<Axiom />} />
+        <Route path="/rewards" element={<Rewards />} />
+      </Routes>
       <Footer />
     </>
   );
