@@ -92,7 +92,7 @@ export default function ConnectWallet() {
             <button className="btn ghost" onClick={refreshBalance} style={{ marginLeft: 10 }}>
               Refresh
             </button>
-          </div>
+          </div>  
 
           <div className="actions">
             <button className="btn ghost" onClick={handleSignSample}>Sign message</button>

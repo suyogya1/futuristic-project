@@ -1,5 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { startMoneyRain } from "../effects/moneyRain";
+import DexScreenerChart from "../components/DexScreenerChart";
+import ConnectWallet from "../components/connectWallet";
+import SwapTerminal from "../components/SwapTerminal";
 
 export default function BuySellUI({
   tokenSymbol = "1FA",
@@ -9,10 +12,12 @@ export default function BuySellUI({
   const [side, setSide] = useState("buy");
   const [amount, setAmount] = useState("");
   const [slippage, setSlippage] = useState("1");
+  const [tab, setTab] = useState("buy");
 
   const price = Number(tokenPriceUsd ?? 0);
   const qty = Number(amount || 0);
   const subtotal = qty * price;
+  const pairPath = "solana/REPLACE_WITH_POOL_OR_PAIR"; // optional, for live chart
 
   const btnLabel = useMemo(
     () => (side === "buy" ? `Buy ${tokenSymbol}` : `Sell ${tokenSymbol}`),

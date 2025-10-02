@@ -283,15 +283,173 @@ a { color: inherit; text-decoration: none; }
   color: transparent;
 }
 
-/* === 1FA AI: open animations === */
+/* === 1FA AI — Floating Assistant Polish === */
+
+.ai-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2147483200;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, var(--brand, #6c7cff), var(--brand-2, #7ee7ff));
+  color: #0a0f24;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 28px rgba(108,124,255,.32), 0 0 0 6px var(--ring, rgba(124,139,255,.45));
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .18s ease, filter .2s ease;
+}
+.ai-fab:hover { transform: translateY(-1px) scale(1.02); filter: saturate(1.03); }
+.ai-fab:active { transform: translateY(0) scale(0.98); }
+.ai-fab.ai-fab-pop { animation: fab-pop .22s ease-out; }
 @keyframes fab-pop {
-  0%   { transform: scale(0.92); }
-  60%  { transform: scale(1.06); }
-  100% { transform: scale(1.00); }
+  0% { transform: scale(.96); }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
+.ai-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483100;
+  background: radial-gradient(800px 380px at 70% 10%, rgba(108,124,255,.10), transparent 60%),
+              rgba(6,10,22,0.46);
+  backdrop-filter: blur(3px);
+}
+
+.ai-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 86px; /* above FAB */
+  z-index: 2147483300;
+  width: min(420px, 92vw);
+  max-height: min(72vh, 680px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #0f1534, #0c122a);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.55),
+    0 0 0 1px rgba(126,231,255,.05) inset;
+  overflow: hidden;
+  animation: panel-in .24s cubic-bezier(.22,.8,.34,1);
+  overscroll-behavior: contain;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 @keyframes panel-in {
-  0%   { transform: translateY(10px) scale(0.96); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
+  from { opacity: 0; transform: translateY(10px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0)     scale(1); }
 }
 
+.ai-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ai-titlewrap { display: flex; align-items: center; gap: 10px; }
+.ai-badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #0a0f24;
+  background: linear-gradient(135deg, var(--brand, #6c7cff), var(--brand-2, #7ee7ff));
+  font-weight: 800;
+  letter-spacing: .25px;
+  box-shadow: 0 6px 16px rgba(108,124,255,.3);
+}
+.ai-head h3 { margin: 0; font-size: 20px; }
+.ai-x {
+  background: transparent;
+  border: 0;
+  color: var(--text, #e7ecff);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: .9;
+  padding: 6px 8px;
+  border-radius: 10px;
+  transition: background .15s ease, opacity .15s ease, transform .08s ease;
+}
+.ai-x:hover { opacity: 1; background: rgba(255,255,255,.06); transform: translateY(-1px); }
+
+.ai-body {
+  padding: 14px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Scoped fancy scrollbar (WebKit/Chromium only) */
+.ai-body::-webkit-scrollbar { width: 10px; }
+.ai-body::-webkit-scrollbar-track { background: transparent; }
+.ai-body::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.12);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.ai-body::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.18); }
+
+.ai-accordion { display: grid; gap: 12px; margin-top: 6px; }
+.ai-qa {
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset;
+  overflow: hidden;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .08s ease;
+}
+.ai-qa:hover {
+  border-color: rgba(126,231,255,.25);
+  box-shadow: 0 0 0 1px rgba(126,231,255,.15) inset;
+  transform: translateY(-1px);
+}
+.ai-q {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font-weight: 650;
+}
+.ai-caret { font-weight: 800; opacity: .9; }
+.ai-a {
+  max-height: 0;
+  padding: 0 14px;
+  overflow: hidden;
+  transition: max-height .22s ease, padding .22s ease, opacity .2s ease;
+  opacity: .7;
+}
+.ai-qa.open .ai-a {
+  max-height: 180px;
+  padding: 0 14px 12px 14px;
+  opacity: 1;
+}
+
+.ai-lead { margin-top: 0; }
+
+.ai-foot {
+  padding: 10px 14px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(0deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+}
+
+/* Make sure body can still scroll when pointer is outside the panel.
+   (Functional part is already handled in JS via capture listeners.) */
+.ai-panel, .ai-body { overscroll-behavior: contain; }

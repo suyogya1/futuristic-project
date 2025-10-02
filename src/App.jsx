@@ -14,9 +14,9 @@ function Nav() {
           <Link to="/" style={{ textDecoration: "none" }}>One For All </Link>
         </div>
         <nav className="links">
-          <a href="/buy-sell" target="_blank" rel="noopener noreferrer">Buy/Sell Coin</a>
-          <a href="/axiom" target="_blank" rel="noopener noreferrer">Axiom-like</a>
-          <a href="/rewards" target="_blank" rel="noopener noreferrer">Rewards</a>
+          <a href="/buy-sell" target="_blank" rel="noopener noreferrer">Launch Web App</a>
+          <a href="/axiom" rel="noopener noreferrer">Axiom-like</a>
+          <a href="/rewards"  rel="noopener noreferrer">Rewards</a>
         </nav>
         <button className="menu" aria-label="Menu">☰</button>
       </div>
