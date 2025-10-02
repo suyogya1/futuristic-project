@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Landing from "./pages/Landing.jsx";
-import BuySell from "./pages/BuySell.jsx";
+import Landing from "./pages/landing.jsx";
+import BuySell from "./pages/buySell.jsx";
 import Axiom from "./pages/axiom.jsx";
 import Rewards from "./pages/rewards.jsx";
-import FloatingAssistant from "./components/FloatingAssistant.jsx";
+import FloatingAssistant from "./components/floatingAssistant.jsx";
 
 function Nav() {
   return (

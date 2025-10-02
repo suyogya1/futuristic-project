@@ -302,6 +302,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 14px 28px rgba(108,124,255,.32), 0 0 0 6px var(--ring, rgba(124,139,255,.45));
   cursor: pointer;
   transition: transform .12s ease, box-shadow .18s ease, filter .2s ease;
+  overflow: hidden;
 }
 .ai-fab:hover { transform: translateY(-1px) scale(1.02); filter: saturate(1.03); }
 .ai-fab:active { transform: translateY(0) scale(0.98); }
@@ -453,3 +454,4 @@ a { color: inherit; text-decoration: none; }
 /* Make sure body can still scroll when pointer is outside the panel.
    (Functional part is already handled in JS via capture listeners.) */
 .ai-panel, .ai-body { overscroll-behavior: contain; }
+

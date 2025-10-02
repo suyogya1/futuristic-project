@@ -1,5 +1,5 @@
 import React from "react";
-import Reveal from "../components/Reveal";
+import Reveal from "../components/reveal";
 
 export default function Landing() {
   return (

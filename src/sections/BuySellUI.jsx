@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { startMoneyRain } from "../effects/moneyRain";
-import DexScreenerChart from "../components/DexScreenerChart";
+import DexScreenerChart from "../components/dexScreenerChart";
 import ConnectWallet from "../components/connectWallet";
-import SwapTerminal from "../components/SwapTerminal";
+import SwapTerminal from "../components/swapTerminal";
 
 export default function BuySellUI({
   tokenSymbol = "1FA",
