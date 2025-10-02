@@ -97,11 +97,11 @@ export default function Rewards() {
                 <>
                   <div className="mono" style={{
                     marginTop: 10, padding: "10px 12px", borderRadius: 12,
-                    border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)"
+                    border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06),"
                   }}>
                     {myCode}
                   </div>
-                  <button className="btn primary" style={{ width: "auto", marginTop: 10 }} onClick={handleCopy}>
+                  <button className="btn primary" style={{ width: "100%", marginTop: 10 }} onClick={handleCopy}>
                     Copy code
                   </button>
                 </>
@@ -124,7 +124,7 @@ export default function Rewards() {
                 style={{ marginTop: 10 }}
               />
               <button className="btn primary" style={{ width: "100%", marginTop: 10 }} onClick={handleValidate}>
-                Validate & Apply
+                Apply
               </button>
             </div>
 
@@ -147,7 +147,6 @@ export default function Rewards() {
               </div>
 
               <div className="hint" style={{ marginTop: 10 }}>
-                {/* TODO: Replace with real on-chain/DB-backed stats. */}
                 This is a local preview. Connect a backend or smart contract to persist globally.
               </div>
             </div>
