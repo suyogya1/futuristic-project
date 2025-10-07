@@ -1,30 +1,21 @@
-// src/pages/landing.jsx
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Reveal from "../components/reveal";
 import MagicBento from "../components/magicBento";
-
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment, ContactShadows, Html } from "@react-three/drei";
 import * as THREE from "three";
 import { MOUSE, TOUCH } from "three";
 
-/* ======== One-place tuning ======== */
 const HERO = {
   fov: 50,
   height: 540,
-  coverage: 0.44, // MAIN SIZE KNOB
-  fov: 50,
-  height: 540,
-  coverage: 0.55, // slightly larger (try 0.47 if you want a bit more)
+  coverage: 0.55,
   offsetY: -0.05,
   rotationSpeed: 0.38,
   minPolar: Math.PI * 0.18,
   maxPolar: Math.PI - Math.PI * 0.18,
 };
 
-
-
-/* ------------- Error boundary ------------- */
 class ErrorBoundary extends React.Component {
   state = { hasError: false };
   static getDerivedStateFromError(err) { return { hasError: true, err }; }
@@ -32,7 +23,6 @@ class ErrorBoundary extends React.Component {
   render() { return this.state.hasError ? (this.props.fallback ?? null) : this.props.children; }
 }
 
-/* ------------- Small loader ------------- */
 function NiceLoader({ label = "Loading 3D…" }) {
   return (
     <Html center style={{ pointerEvents: "none" }}>
@@ -53,7 +43,6 @@ function NiceLoader({ label = "Loading 3D…" }) {
   );
 }
 
-/* --------- Fallback model (if GLB fails) --------- */
 function FallbackKnot({ rotationSpeed = 0.6 }) {
   const ref = useRef();
   useFrame((_, d) => {
@@ -73,60 +62,48 @@ function FallbackKnot({ rotationSpeed = 0.6 }) {
   );
 }
 
-/* --------- Real GLB with coverage-based size --------- */
 function HeroModel({ src = "/assets/model.glb", idleDelay = 1600, onInteractChange }) {
-  const holder = useRef();                    // container for centered & scaled model
+  const holder = useRef();
   const controls = useRef();
-  const fixedDistRef = useRef(null);          // fixed orbit radius (camera ↔ target)
+  const fixedDistRef = useRef(null);
   const { camera } = useThree();
   const { scene } = useGLTF(src);
 
   const [auto, setAuto] = useState(true);
   const idleTimer = useRef();
 
-  // Fit, scale for coverage, and lock distance once
   useEffect(() => {
     if (!scene || !holder.current) return;
 
-    // Clone to avoid mutating cached scene; center it at origin
     const root = scene.clone(true);
     const box = new THREE.Box3().setFromObject(root);
     const sphere = box.getBoundingSphere(new THREE.Sphere());
     const center = sphere.center.clone();
     root.position.sub(center);
 
-    // Mount the centered model
     holder.current.clear();
     holder.current.add(root);
 
-    // Camera setup
     const fovRad = THREE.MathUtils.degToRad(HERO.fov);
     camera.fov = HERO.fov;
     camera.near = 0.01;
     camera.far = 1000;
-    camera.position.set(0, 0, 1); // temp; we’ll place correctly after controls target
+    camera.position.set(0, 0, 1);
     camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
 
-    // Controls target at slight Y offset
     if (controls.current) {
       controls.current.target.set(0, HERO.offsetY, 0);
       controls.current.update();
     }
 
-    // Choose a comfortable base distance using FOV and object radius
-    // Any positive constant works; we’ll then scale to match coverage.
     const baseDist = (sphere.radius / Math.sin(fovRad / 2)) * 1.25;
+    const scale = (HERO.coverage * baseDist * Math.tan(fovRad / 2)) / (sphere.radius || 1) * 1.5;
 
-    // Compute scale so the projected radius occupies HERO.coverage of the view half-height:
-    // r_proj = scale * r;   viewHalf = dist * tan(fov/2)
-    // Want: r_proj = coverage * viewHalf  => scale = coverage * dist * tan(fov/2) / r
-    const scale = (HERO.coverage * baseDist * Math.tan(fovRad / 2)) / (sphere.radius || 1);
     holder.current.scale.setScalar(scale);
 
-    // Now place camera exactly at this distance from target
     const target = controls.current ? controls.current.target : new THREE.Vector3(0, 0, 0);
-    const dir = new THREE.Vector3(0, 0, 1); // looking down -Z to origin? we’ll place on +Z
+    const dir = new THREE.Vector3(0, 0, 1);
     const pos = dir.multiplyScalar(baseDist).add(target);
     camera.position.copy(pos);
     camera.near = Math.max(0.01, baseDist / 500);
@@ -134,7 +111,6 @@ function HeroModel({ src = "/assets/model.glb", idleDelay = 1600, onInteractChan
     camera.lookAt(target);
     camera.updateProjectionMatrix();
 
-    // Lock orbit radius precisely to baseDist
     if (controls.current) {
       fixedDistRef.current = baseDist;
       controls.current.enableZoom = false;
@@ -146,18 +122,14 @@ function HeroModel({ src = "/assets/model.glb", idleDelay = 1600, onInteractChan
     }
   }, [camera, scene]);
 
-  // Gentle auto-rotate
   useFrame((_, d) => {
     if (auto && holder.current) holder.current.rotation.y += HERO.rotationSpeed * d;
   });
 
-  // Keep radius locked & resume auto-rotate after a pause
   const onStart = () => {
     setAuto(false);
     onInteractChange?.(true);
     if (idleTimer.current) clearTimeout(idleTimer.current);
-
-    // If distance drifted for any reason, snap back to fixedDist
     if (controls.current && fixedDistRef.current != null) {
       const { target, object: cam } = controls.current;
       const dir = cam.position.clone().sub(target).normalize();
@@ -176,7 +148,17 @@ function HeroModel({ src = "/assets/model.glb", idleDelay = 1600, onInteractChan
 
   return (
     <>
-      <group ref={holder} />
+      <group ref={holder}>
+        {/* Add green eyes as spheres */}
+        <mesh position={[-0.2, 0.5, 0.3]} scale={[0.1, 0.1, 0.1]}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshStandardMaterial color="green" emissive="green" />
+        </mesh>
+        <mesh position={[0.2, 0.5, 0.3]} scale={[0.1, 0.1, 0.1]}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshStandardMaterial color="green" emissive="green" />
+        </mesh>
+      </group>
       <ContactShadows position={[0, -0.55, 0]} opacity={0.24} scale={8} blur={2.2} far={3} />
       <OrbitControls
         ref={controls}
@@ -195,7 +177,6 @@ function HeroModel({ src = "/assets/model.glb", idleDelay = 1600, onInteractChan
 
 useGLTF.preload("/assets/model.glb");
 
-/* ------------- Canvas frame (centered, no ghost box) ------------- */
 function CanvasFrame({ children, onInteract }) {
   const ref = useRef();
   useEffect(() => {
@@ -243,7 +224,6 @@ function CanvasFrame({ children, onInteract }) {
   );
 }
 
-/* ------------------------------ Page ------------------------------ */
 export default function Landing() {
   const [interact, setInteract] = useState(false);
   const dpr = useMemo(() => [1, Math.min(2, Math.round(window.devicePixelRatio || 1.5))], []);
@@ -252,10 +232,6 @@ export default function Landing() {
     <main>
       <section className="section hero" style={{ paddingTop: 56, paddingBottom: 24 }}>
         <div className="container">
-          <Reveal as="div" className="hero-logo-wrap" y={22}>
-            <img className="hero-logo" src="/1fa-logo.png" alt="One For All logo" />
-          </Reveal>
-
           <Reveal as="h1" className="section-title" style={{ fontSize: 48, marginBottom: 12 }}>
             Welcome to <span className="gradient-text">One For All</span>
           </Reveal>

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { startMoneyRain } from "../effects/moneyRain";
-import DexScreenerChart from "../components/dexScreenerChart";
+import DexScreenerChart from "../components/DexScreenerChart";
 import ConnectWallet from "../components/connectWallet";
 import SwapTerminal from "../components/swapTerminal";
 

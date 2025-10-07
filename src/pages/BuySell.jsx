@@ -1,8 +1,8 @@
 // src/pages/BuySell.jsx
 import React from "react";
 import ConnectWallet from "../components/connectWallet.jsx";
-import BuySellUI from "../sections/buySellUI.jsx";
-import DexScreenerChart from "../components/dexScreenerChart.jsx";
+import BuySellUI from "../sections/BuySellUI";
+import DexScreenerChart from "../components/DexScreenerChart.jsx";
 
 export default function BuySell() {
   // TODO: change to your real pair when ready (e.g., "solana/<pairAddress>")
@@ -42,4 +42,3 @@ export default function BuySell() {
     </main>
   );
 }
-
