@@ -1,18 +1,17 @@
-// src/App.jsx
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
-
-import Landing from "./pages/landing.jsx";
-import BuySell from "./pages/buySell.jsx";
+import Landing from "./pages/Landing.jsx";
+import BuySell from "./pages/BuySell.jsx";
 import Axiom from "./pages/axiom.jsx";
 import Rewards from "./pages/rewards.jsx";
+import ImagePage from "./components/imagePage.jsx";
 import FloatingAIAssistant from "./components/FloatingAssistant.jsx";
+import SendMessagePage from "./components/sendMessagePage.jsx";  {/* Import the SendMessagePage */}
 
 function Nav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  // Close the mobile menu on route change or Escape
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
@@ -30,14 +29,14 @@ function Nav() {
           <Link to="/" style={{ textDecoration: "none" }}>One For All</Link>
         </div>
 
-        {/* Desktop / Mobile links */}
         <nav className={`links ${open ? "open" : ""}`}>
-          {/* Opens new tab as requested */}
           <a href="/buy-sell" target="_blank" rel="noopener noreferrer">
             Launch Web App
           </a>
 
-          {/* Same-tab pages */}
+          <Link to="/meme-battle">Meme Battle</Link> {/* Existing Meme Battle route */}
+          <Link to="/send-message">Send Message</Link> {/* New link for Send Message */}
+
           <Link to="/axiom">Axiom-like</Link>
           <Link to="/rewards">Rewards</Link>
         </nav>
@@ -55,26 +54,7 @@ function Nav() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="footer">
-      <div className="container foot-inner">
-        <div className="brand">One For All</div>
-        <div className="foot-links">
-          <a href="https://x.com/oneforall" target="_blank" rel="noopener noreferrer">
-            X - Connect
-          </a>
-        </div>
-        <div className="foot-copy">
-          © {new Date().getFullYear()} One For All. All rights reserved.
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function App() {
-  // Global background layer (keeps gradient consistent across routes)
   useEffect(() => {
     let bg = document.getElementById("page-bg-layer");
     if (!bg) {
@@ -86,34 +66,20 @@ export default function App() {
     return () => {};
   }, []);
 
-  // Pointer-follow glow for .bento-card
-  useEffect(() => {
-    const onMove = (e) => {
-      document.querySelectorAll(".bento-card").forEach((el) => {
-        const r = el.getBoundingClientRect();
-        const x = ((e.clientX - r.left) / r.width) * 100;
-        el.style.setProperty("--mx", `${x}%`);
-      });
-    };
-    document.addEventListener("pointermove", onMove);
-    return () => document.removeEventListener("pointermove", onMove);
-  }, []);
-
   return (
     <>
-      <Nav />
-
+      <Nav /> {/* Navigation with new route */}
+      
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/buy-sell" element={<BuySell />} />
         <Route path="/axiom" element={<Axiom />} />
         <Route path="/rewards" element={<Rewards />} />
+        <Route path="/meme-battle" element={<ImagePage />} />
+        <Route path="/send-message" element={<SendMessagePage />} /> {/* New route for SendMessagePage */}
       </Routes>
 
-      {/* ✅ Correct component usage */}
-      <FloatingAIAssistant />
-
-      <Footer />
+      <FloatingAIAssistant /> {/* Floating Assistant */}
     </>
   );
 }

@@ -1081,3 +1081,217 @@ a { color: inherit; text-decoration: none; }
 .pump-empty { display:flex; gap:12px; align-items:center; padding:18px;
   border:1px dashed rgba(255,255,255,.12); border-radius:14px; }
 .pump-empty .ce-icon { opacity:.7; }
+
+:root {
+  --bg: #0b1020;
+  --panel: #111632;
+  --text: #e7ecff;
+  --muted: #a7b0d6;
+  --brand: #6c7cff;
+  --brand-2: #7ee7ff;
+  --ring: rgba(124, 139, 255, 0.45);
+  --maxw: 1100px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1000px 600px at 70% -10%, rgba(108,124,255,0.18), transparent 60%),
+    radial-gradient(800px 520px at -10% 30%, rgba(126,231,255,0.10), transparent 60%),
+    #0b1020;
+}
+
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+.image-page {
+  padding: 20px;
+  text-align: center;
+  color: var(--text);
+}
+
+.heading {
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Display sent images above */
+.sent-images {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+/* Layout for Upload Section */
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* Align buttons at the bottom */
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.upload-input,
+.message-input,
+.upload-button {
+  width: 80%;
+  margin: 10px 0;
+}
+
+.input,
+.textarea {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.uploadButton {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.uploadButton:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.upload-restriction {
+  color: var(--muted);
+}
+
+/* Image Preview Section */
+.image-preview {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.uploaded-image {
+  max-width: 300px; /* Limit image size */
+  max-height: 300px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Reactions Section */
+.reactions {
+  margin-top: 20px;
+}
+
+.reactionButton {
+  background: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.reactionButton:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.reaction-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+/* Mobile Styles */
+@media (max-width: 960px) {
+  .upload-section {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .input, .textarea, .uploadButton {
+    width: 100%;
+  }
+}
+
+
+/* Styling for rotating image card */
+.rotate-image-container {
+  width: 200px;
+  height: 200px;
+  perspective: 1000px;
+  display: inline-block;
+  cursor: pointer;
+  margin: 20px;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.6s;
+}
+
+.uploaded-image:hover {
+  transform: rotateY(180deg);
+}
+
+/* Modal for expanded image */
+.modal {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal img {
+  width: 80%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.modal button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
