@@ -149,11 +149,6 @@ function HeroModel({ src = "/assets/model.glb", idleDelay = 1600, onInteractChan
   return (
     <>
       <group ref={holder}>
-        {/* Add green eyes as spheres */}
-        <mesh position={[-0.2, 0.5, 0.3]} scale={[0.1, 0.1, 0.1]}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial color="green" emissive="green" />
-        </mesh>
         <mesh position={[0.2, 0.5, 0.3]} scale={[0.1, 0.1, 0.1]}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial color="green" emissive="green" />
