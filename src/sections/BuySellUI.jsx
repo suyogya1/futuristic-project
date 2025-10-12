@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import DexScreenerChart from "../components/DexScreenerChart";
-import ConnectWallet from "../components/connectWallet";
-import SwapTerminal from "../components/swapTerminal";
+import ConnectWallet from "../components/ConnectWallet";
+import SwapTerminal from "../components/SwapTerminal";
 
 export default function BuySellUI({
   tokenSymbol = "1FA",

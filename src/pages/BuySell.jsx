@@ -1,6 +1,6 @@
 // src/pages/BuySell.jsx
 import React from "react";
-import ConnectWallet from "../components/connectWallet.jsx";
+import ConnectWallet from "../components/ConnectWallet.jsx";
 import BuySellUI from "../sections/BuySellUI";
 import DexScreenerChart from "../components/DexScreenerChart.jsx";
 
