@@ -43,8 +43,8 @@ export default function FloatingAIAssistant({
     const el = document.createElement("style");
     el.id = "floating-ai-styles";
     el.textContent = `
-      .fa-fab{position:fixed;right:18px;bottom:18px;z-index:2147483200;width:56px;height:56px;border:none;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s ease;padding:0;outline:none;}
-      .fa-fab img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(108,124,255,.25));transition:all .25s ease;}
+      .fa-fab{position:fixed;right:18px;bottom:18px;z-index:2147483200;width:70px;height:70px;border:none;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s ease;padding:0;outline:none;}
+      .fa-fab img{width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(108,124,255,.25));transition:all .25s ease;}
       .fa-fab:hover img{transform:translateY(-2px) scale(1.04);filter:drop-shadow(0 10px 28px rgba(108,124,255,.4));}
       .fa-fab:active img{transform:translateY(0) scale(1);}
       .fa-overlay{position:fixed;inset:0;z-index:2147483100;background:radial-gradient(800px 380px at 70% 10%,rgba(108,124,255,.10),transparent 60%),rgba(6,10,22,0.46);backdrop-filter:blur(3px);}
@@ -69,8 +69,8 @@ export default function FloatingAIAssistant({
       .fa-msg.assistant h2{font-size:16px;}
       .fa-msg.assistant h3{font-size:14px;}
       .fa-msg.assistant p{margin:8px 0;}
-      .fa-msg.assistant ul,.fa-msg.assistant ol{margin:8px 0;padding-left:20px;}
-      .fa-msg.assistant li{margin:4px 0;}
+      .fa-msg.assistant ul,.fa-msg.assistant ol{margin:8px 0;padding-left:20px;overflow:hidden;}
+      .fa-msg.assistant li{margin:4px 0;word-wrap:break-word;overflow-wrap:break-word;}
       .fa-msg.assistant code{background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px;font-family:ui-monospace,monospace;font-size:13px;color:#9ecbff;}
       .fa-msg.assistant pre{background:rgba(6,10,22,.6);border:1px solid rgba(255,255,255,.05);padding:12px;border-radius:8px;overflow-x:auto;margin:12px 0;}
       .fa-msg.assistant pre code{background:transparent;padding:0;color:#c3f0ff;}
