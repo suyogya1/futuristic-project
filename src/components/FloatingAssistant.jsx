@@ -43,8 +43,9 @@ export default function FloatingAIAssistant({
     const el = document.createElement("style");
     el.id = "floating-ai-styles";
     el.textContent = `
-      .fa-fab{position:fixed;right:24px;bottom:24px;z-index:999999;width:56px;height:56px;border-radius:50%;border:0;background:linear-gradient(135deg,#6c7cff,#7ee7ff);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(108,124,255,.35);cursor:pointer;transition:transform .2s,box-shadow .2s;}
+      .fa-fab{position:fixed;right:24px;bottom:24px;z-index:999999;width:56px;height:56px;border-radius:50%;border:0;background:linear-gradient(135deg,#6c7cff,#7ee7ff);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(108,124,255,.35);cursor:pointer;transition:transform .2s,box-shadow .2s;padding:0;overflow:hidden;}
       .fa-fab:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(108,124,255,.45);}
+      .fa-fab img{width:100%;height:100%;object-fit:cover;}
       .fa-overlay{position:fixed;inset:0;z-index:999998;background:rgba(6,10,22,.5);backdrop-filter:blur(4px);}
       .fa-panel{position:fixed;right:24px;bottom:96px;z-index:999999;width:min(420px,calc(100vw - 48px));height:min(640px,calc(100vh - 140px));display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#0f1534,#0c122a);border:1px solid rgba(255,255,255,.1);box-shadow:0 20px 60px rgba(0,0,0,.6);font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;}
       .fa-head{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
@@ -243,9 +244,7 @@ export default function FloatingAIAssistant({
     <>
       {!open && (
         <button className="fa-fab" onClick={() => setOpen(true)} aria-label="Chat">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
+          <img src="/1fa-logo.png" alt="1FA Assistant" />
         </button>
       )}
 
