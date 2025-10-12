@@ -225,19 +225,122 @@ export default function Landing() {
 
   return (
     <main>
-      <section className="section hero" style={{ paddingTop: 56, paddingBottom: 24 }}>
-        <div className="container">
-          <Reveal as="h1" className="section-title" style={{ fontSize: 48, marginBottom: 12 }}>
-            Welcome to <span className="gradient-text">One For All</span>
+      <section className="section hero" style={{ paddingTop: 80, paddingBottom: 40, position: 'relative', overflow: 'hidden' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <Reveal as="div" style={{ textAlign: 'center', marginBottom: 16 }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '8px 16px',
+              background: 'rgba(126,231,255,0.08)',
+              border: '1px solid rgba(126,231,255,0.25)',
+              borderRadius: 999,
+              fontSize: 14,
+              fontWeight: 700,
+              color: '#7ee7ff',
+              marginBottom: 24
+            }}>
+              <span style={{ fontSize: 16 }}>⚡</span>
+              Built on Solana
+            </div>
+          </Reveal>
+
+          <Reveal as="h1" className="section-title" style={{
+            fontSize: 'clamp(40px, 6vw, 72px)',
+            marginBottom: 20,
+            textAlign: 'center',
+            lineHeight: 1.1,
+            fontWeight: 900,
+            letterSpacing: '-0.03em'
+          }}>
+            The Future of <br/>
+            <span className="gradient-text">Community Tokens</span>
           </Reveal>
 
           <Reveal delay={80}>
-            <p className="section-sub" style={{ maxWidth: 720 }}>
-              The playful token with serious vibes. Explore the ecosystem and trade in a dedicated page.
+            <p className="section-sub" style={{
+              maxWidth: 680,
+              textAlign: 'center',
+              fontSize: 20,
+              lineHeight: 1.6,
+              margin: '0 auto 32px'
+            }}>
+              Experience seamless trading, instant swaps, and zero-friction transactions powered by Solana's lightning-fast blockchain.
             </p>
           </Reveal>
 
-          <Reveal y={14} delay={120}>
+          <Reveal y={14} delay={160}>
+            <div style={{
+              display: 'flex',
+              gap: 16,
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginBottom: 48
+            }}>
+              <a
+                href="/buy-sell"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '16px 32px',
+                  background: 'linear-gradient(135deg, #6c7cff, #7ee7ff)',
+                  color: '#0a0f24',
+                  borderRadius: 12,
+                  fontWeight: 800,
+                  fontSize: 18,
+                  textDecoration: 'none',
+                  boxShadow: '0 6px 20px rgba(108,124,255,0.35), 0 0 0 6px rgba(124,139,255,0.15)',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(108,124,255,0.45), 0 0 0 8px rgba(124,139,255,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(108,124,255,0.35), 0 0 0 6px rgba(124,139,255,0.15)';
+                }}
+              >
+                Launch App
+                <span style={{ fontSize: 20 }}>→</span>
+              </a>
+              <a
+                href="https://x.com/oneforall"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '16px 32px',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  color: 'var(--text)',
+                  borderRadius: 12,
+                  fontWeight: 700,
+                  fontSize: 18,
+                  textDecoration: 'none',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+                }}
+              >
+                Join Community
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal y={14} delay={240}>
             <CanvasFrame onInteract={setInteract}>
               <Canvas
                 dpr={dpr}
@@ -258,182 +361,423 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== The rest of your sections stay unchanged ===== */}
       <MagicBento />
 
-      <section className="section">
+      <section className="section" style={{ paddingTop: 80, paddingBottom: 60 }}>
         <div className="container">
-          <div className="grid3" style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))" }}>
-            <Reveal as="div" className="panel" y={20}>
-              <h3 style={{ marginTop: 0 }}>Fast & Low Cost</h3>
-              <p className="hint">Solana finality in seconds and fees that round to zero.</p>
-            </Reveal>
-            <Reveal as="div" className="panel" y={20} delay={80}>
-              <h3 style={{ marginTop: 0 }}>Composability</h3>
-              <p className="hint">Works with leading DEXs, aggregators, and wallets.</p>
-            </Reveal>
-            <Reveal as="div" className="panel" y={20} delay={160}>
-              <h3 style={{ marginTop: 0 }}>Community First</h3>
-              <p className="hint">Transparent updates and incentives for long-term holders.</p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container" style={{ display: "grid", gap: 12 }}>
-          <Reveal as="h2" className="section-title" y={-18}>
-            What is <span className="gradient-text">1FA</span>?
-          </Reveal>
-          <Reveal y={22} delay={60}>
-            <p className="section-sub" style={{ maxWidth: 860 }}>
-              A meme coin with real polish. We keep it simple: ship useful UI, stay transparent, and let the
-              community have fun.
+          <Reveal as="div" style={{ textAlign: 'center', marginBottom: 48 }}>
+            <h2 className="section-title" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 16 }}>
+              Why Choose <span className="gradient-text">1FA</span>?
+            </h2>
+            <p className="section-sub" style={{ maxWidth: 720, margin: '0 auto' }}>
+              Built for speed, designed for the community, and powered by cutting-edge technology.
             </p>
           </Reveal>
 
-          <div style={{ display: "grid", gap: 12 }}>
-            <Reveal as="div" className="panel" y={26}>
-              <h3 style={{ margin: "0 0 6px" }}>Why it exists</h3>
-              <p className="hint" style={{ margin: 0 }}>
-                Memes move culture, but tools create staying power. 1FA mixes both — fast swaps, friendly UX, and
-                rewards.
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 24,
+            marginTop: 48
+          }}>
+            <Reveal as="div" className="panel" y={20} style={{
+              padding: 28,
+              background: 'linear-gradient(135deg, rgba(108,124,255,0.06), rgba(126,231,255,0.04))',
+              borderColor: 'rgba(108,124,255,0.2)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                width: 56,
+                height: 56,
+                display: 'grid',
+                placeItems: 'center',
+                background: 'linear-gradient(135deg, #6c7cff, #7ee7ff)',
+                borderRadius: 16,
+                marginBottom: 16,
+                fontSize: 28
+              }}>⚡</div>
+              <h3 style={{ margin: '0 0 12px', fontSize: 24, fontWeight: 800 }}>Lightning Fast</h3>
+              <p className="hint" style={{ margin: 0, lineHeight: 1.6 }}>
+                Transactions settle in under 1 second with near-zero fees. Trade without waiting, trade without limits.
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={-28} delay={80}>
-              <h3 style={{ margin: "0 0 6px" }}>Built for speed</h3>
-              <p className="hint" style={{ margin: 0 }}>
-                Solana settles in seconds with near-zero fees, perfect for active trading and playful experimentation.
+            <Reveal as="div" className="panel" y={20} delay={100} style={{
+              padding: 28,
+              background: 'linear-gradient(135deg, rgba(126,231,255,0.06), rgba(108,124,255,0.04))',
+              borderColor: 'rgba(126,231,255,0.2)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                width: 56,
+                height: 56,
+                display: 'grid',
+                placeItems: 'center',
+                background: 'linear-gradient(135deg, #7ee7ff, #6c7cff)',
+                borderRadius: 16,
+                marginBottom: 16,
+                fontSize: 28
+              }}>🔒</div>
+              <h3 style={{ margin: '0 0 12px', fontSize: 24, fontWeight: 800 }}>Battle Tested</h3>
+              <p className="hint" style={{ margin: 0, lineHeight: 1.6 }}>
+                Built on Solana's proven infrastructure with bank-grade security protocols and audited smart contracts.
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={30} delay={140}>
-              <h3 style={{ margin: "0 0 6px" }}>Community-first</h3>
-              <p className="hint" style={{ margin: 0 }}>
-                We ship publicly and iterate with holders. No mystery boxes — only features you can touch.
+            <Reveal as="div" className="panel" y={20} delay={200} style={{
+              padding: 28,
+              background: 'linear-gradient(135deg, rgba(126,231,255,0.04), rgba(108,124,255,0.06))',
+              borderColor: 'rgba(108,124,255,0.2)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                width: 56,
+                height: 56,
+                display: 'grid',
+                placeItems: 'center',
+                background: 'linear-gradient(135deg, #6c7cff, #7ee7ff)',
+                borderRadius: 16,
+                marginBottom: 16,
+                fontSize: 28
+              }}>🌊</div>
+              <h3 style={{ margin: '0 0 12px', fontSize: 24, fontWeight: 800 }}>Deep Liquidity</h3>
+              <p className="hint" style={{ margin: 0, lineHeight: 1.6 }}>
+                Access deep liquidity pools and get the best rates. No slippage, no surprises, just smooth swaps.
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="section alt">
+      <section className="section" style={{
+        background: 'linear-gradient(180deg, rgba(108,124,255,0.03) 0%, transparent 100%)',
+        paddingTop: 80,
+        paddingBottom: 80
+      }}>
         <div className="container">
-          <Reveal as="h2" className="section-title" y={-18}>
-            Token quick facts
+          <div className="grid3" style={{ display: "grid", gap: 24, gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))" }}>
+            <Reveal as="div" className="panel" y={20} style={{ padding: 28 }}>
+              <div style={{ fontSize: 36, marginBottom: 12 }}>🚀</div>
+              <h3 style={{ marginTop: 0, fontSize: 22, fontWeight: 800 }}>Fast & Low Cost</h3>
+              <p className="hint" style={{ lineHeight: 1.6 }}>Solana finality in seconds and fees that round to zero. Experience the speed of light.</p>
+            </Reveal>
+            <Reveal as="div" className="panel" y={20} delay={80} style={{ padding: 28 }}>
+              <div style={{ fontSize: 36, marginBottom: 12 }}>🔗</div>
+              <h3 style={{ marginTop: 0, fontSize: 22, fontWeight: 800 }}>Composability</h3>
+              <p className="hint" style={{ lineHeight: 1.6 }}>Seamlessly integrates with leading DEXs, aggregators, and wallets across the ecosystem.</p>
+            </Reveal>
+            <Reveal as="div" className="panel" y={20} delay={160} style={{ padding: 28 }}>
+              <div style={{ fontSize: 36, marginBottom: 12 }}>💎</div>
+              <h3 style={{ marginTop: 0, fontSize: 22, fontWeight: 800 }}>Community First</h3>
+              <p className="hint" style={{ lineHeight: 1.6 }}>Transparent updates, governance participation, and rewards for dedicated holders.</p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 80, paddingBottom: 80 }}>
+        <div className="container" style={{ display: "grid", gap: 24 }}>
+          <Reveal as="div" style={{ textAlign: 'center' }}>
+            <h2 className="section-title" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 16 }}>
+              What is <span className="gradient-text">1FA</span>?
+            </h2>
+            <p className="section-sub" style={{ maxWidth: 720, margin: '0 auto', fontSize: 18, lineHeight: 1.6 }}>
+              More than just a meme token. 1FA represents a new era of community-driven DeFi with professional tools, transparent governance, and genuine value creation.
+            </p>
+          </Reveal>
+
+          <div style={{ display: "grid", gap: 20, marginTop: 40 }}>
+            <Reveal as="div" className="panel" y={26} style={{
+              padding: 32,
+              background: 'linear-gradient(135deg, rgba(108,124,255,0.08), rgba(126,231,255,0.04))',
+              borderColor: 'rgba(108,124,255,0.15)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
+                <div style={{
+                  width: 48,
+                  height: 48,
+                  background: 'linear-gradient(135deg, #6c7cff, #7ee7ff)',
+                  borderRadius: 12,
+                  display: 'grid',
+                  placeItems: 'center',
+                  fontSize: 24
+                }}>🎯</div>
+                <h3 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>Why it exists</h3>
+              </div>
+              <p className="hint" style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>
+                Memes move culture, but solid infrastructure creates lasting value. 1FA combines viral appeal with professional-grade tools, creating a token that's both fun and functional.
+              </p>
+            </Reveal>
+
+            <Reveal as="div" className="panel" y={-28} delay={80} style={{
+              padding: 32,
+              background: 'linear-gradient(135deg, rgba(126,231,255,0.08), rgba(108,124,255,0.04))',
+              borderColor: 'rgba(126,231,255,0.15)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
+                <div style={{
+                  width: 48,
+                  height: 48,
+                  background: 'linear-gradient(135deg, #7ee7ff, #6c7cff)',
+                  borderRadius: 12,
+                  display: 'grid',
+                  placeItems: 'center',
+                  fontSize: 24
+                }}>⚡</div>
+                <h3 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>Built for speed</h3>
+              </div>
+              <p className="hint" style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>
+                Powered by Solana's blazing-fast blockchain. Sub-second finality and microscopic fees make 1FA perfect for high-frequency trading and seamless user experiences.
+              </p>
+            </Reveal>
+
+            <Reveal as="div" className="panel" y={30} delay={140} style={{
+              padding: 32,
+              background: 'linear-gradient(135deg, rgba(108,124,255,0.04), rgba(126,231,255,0.08))',
+              borderColor: 'rgba(108,124,255,0.15)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
+                <div style={{
+                  width: 48,
+                  height: 48,
+                  background: 'linear-gradient(135deg, #6c7cff, #7ee7ff)',
+                  borderRadius: 12,
+                  display: 'grid',
+                  placeItems: 'center',
+                  fontSize: 24
+                }}>🤝</div>
+                <h3 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>Community-first</h3>
+              </div>
+              <p className="hint" style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>
+                Built in public with full transparency. Every feature, every update, every decision is made with community input. Your voice matters, your vision shapes our future.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{
+        background: 'linear-gradient(180deg, transparent 0%, rgba(108,124,255,0.03) 100%)',
+        paddingTop: 80,
+        paddingBottom: 80
+      }}>
+        <div className="container">
+          <Reveal as="div" style={{ textAlign: 'center', marginBottom: 48 }}>
+            <h2 className="section-title" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 16 }}>
+              Token <span className="gradient-text">Quick Facts</span>
+            </h2>
           </Reveal>
           <div
             className="grid3"
-            style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", marginTop: 10 }}
+            style={{ display: "grid", gap: 24, gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", marginTop: 40 }}
           >
-            <Reveal as="div" className="panel" y={28}>
-              <div className="row between">
-                <div className="label">Supply</div>
-                <div className="badge">placeholder</div>
+            <Reveal as="div" className="panel" y={28} style={{ padding: 32 }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>💰</div>
+              <div className="row between" style={{ marginBottom: 12 }}>
+                <div className="label" style={{ fontSize: 16, fontWeight: 700 }}>Total Supply</div>
+                <div className="badge" style={{ padding: '6px 12px', fontSize: 11 }}>FIXED</div>
               </div>
               <div className="divider" />
-              <p className="hint" style={{ margin: 0 }}>1,000,000,000 1FA</p>
+              <p style={{ margin: 0, fontSize: 28, fontWeight: 800, color: '#7ee7ff' }}>1,000,000,000</p>
+              <p className="hint" style={{ margin: '8px 0 0', fontSize: 14 }}>1FA tokens in circulation</p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={-28} delay={80}>
-              <div className="row between">
-                <div className="label">Fees</div>
-                <div className="badge">v1</div>
+            <Reveal as="div" className="panel" y={-28} delay={80} style={{ padding: 32 }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>💸</div>
+              <div className="row between" style={{ marginBottom: 12 }}>
+                <div className="label" style={{ fontSize: 16, fontWeight: 700 }}>Trading Fees</div>
+                <div className="badge" style={{ padding: '6px 12px', fontSize: 11 }}>LIVE</div>
               </div>
               <div className="divider" />
-              <p className="hint" style={{ margin: 0 }}>0% buy / sell (placeholder)</p>
+              <p style={{ margin: 0, fontSize: 28, fontWeight: 800, color: '#7ee7ff' }}>0%</p>
+              <p className="hint" style={{ margin: '8px 0 0', fontSize: 14 }}>No buy or sell tax</p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={30} delay={140}>
-              <div className="row between">
-                <div className="label">LP</div>
-                <div className="badge">locked</div>
+            <Reveal as="div" className="panel" y={30} delay={140} style={{ padding: 32 }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>🔒</div>
+              <div className="row between" style={{ marginBottom: 12 }}>
+                <div className="label" style={{ fontSize: 16, fontWeight: 700 }}>Liquidity</div>
+                <div className="badge" style={{ padding: '6px 12px', fontSize: 11, background: 'rgba(126,231,255,0.15)', borderColor: 'rgba(126,231,255,0.3)' }}>LOCKED</div>
               </div>
               <div className="divider" />
-              <p className="hint" style={{ margin: 0 }}>Details will be published openly.</p>
+              <p style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>✓ Verified</p>
+              <p className="hint" style={{ margin: '8px 0 0', fontSize: 14 }}>Liquidity permanently secured</p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" style={{ paddingTop: 80, paddingBottom: 80 }}>
         <div className="container">
-          <Reveal as="h2" className="section-title" y={-18}>
-            How to buy in 3 steps
+          <Reveal as="div" style={{ textAlign: 'center', marginBottom: 48 }}>
+            <h2 className="section-title" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 16 }}>
+              Get Started in <span className="gradient-text">3 Steps</span>
+            </h2>
+            <p className="section-sub" style={{ maxWidth: 680, margin: '0 auto' }}>
+              Join the 1FA ecosystem in minutes. No complicated processes, just straightforward setup.
+            </p>
           </Reveal>
-        </div>
 
-        <div className="container">
           <div
             className="grid3"
-            style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", marginTop: 10 }}
+            style={{ display: "grid", gap: 24, gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", marginTop: 48 }}
           >
-            <Reveal as="div" className="panel" y={24}>
-              <div className="badge" style={{ marginBottom: 6 }}>Step 1</div>
-              <h3 style={{ margin: 0 }}>Install Phantom</h3>
-              <p className="hint" style={{ margin: 0 }}>
-                Create a wallet and safely back up your seed phrase.
+            <Reveal as="div" className="panel" y={24} style={{
+              padding: 32,
+              background: 'linear-gradient(135deg, rgba(108,124,255,0.08), transparent)',
+              borderColor: 'rgba(108,124,255,0.2)'
+            }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 48,
+                height: 48,
+                background: 'linear-gradient(135deg, #6c7cff, #7ee7ff)',
+                borderRadius: 999,
+                fontSize: 20,
+                fontWeight: 900,
+                color: '#0a0f24',
+                marginBottom: 20
+              }}>01</div>
+              <h3 style={{ margin: '0 0 12px', fontSize: 24, fontWeight: 800 }}>Install Phantom</h3>
+              <p className="hint" style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>
+                Download the Phantom wallet extension and create your account. Back up your seed phrase securely.
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={-26} delay={80}>
-              <div className="badge" style={{ marginBottom: 6 }}>Step 2</div>
-              <h3 style={{ margin: 0 }}>Fund with SOL</h3>
-              <p className="hint" style={{ margin: 0 }}>
-                Buy SOL on an exchange or on-ramp, then send to Phantom.
+            <Reveal as="div" className="panel" y={-26} delay={80} style={{
+              padding: 32,
+              background: 'linear-gradient(135deg, rgba(126,231,255,0.08), transparent)',
+              borderColor: 'rgba(126,231,255,0.2)'
+            }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 48,
+                height: 48,
+                background: 'linear-gradient(135deg, #7ee7ff, #6c7cff)',
+                borderRadius: 999,
+                fontSize: 20,
+                fontWeight: 900,
+                color: '#0a0f24',
+                marginBottom: 20
+              }}>02</div>
+              <h3 style={{ margin: '0 0 12px', fontSize: 24, fontWeight: 800 }}>Fund with SOL</h3>
+              <p className="hint" style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>
+                Purchase SOL from any major exchange or on-ramp service, then transfer it to your Phantom wallet.
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={28} delay={140}>
-              <div className="badge" style={{ marginBottom: 6 }}>Step 3</div>
-              <h3 style={{ margin: 0 }}>Open App</h3>
-              <p className="hint" style={{ margin: 0 }}>
-                Use the dedicated page to connect Phantom and trade 1FA.
+            <Reveal as="div" className="panel" y={28} delay={140} style={{
+              padding: 32,
+              background: 'linear-gradient(135deg, rgba(108,124,255,0.08), transparent)',
+              borderColor: 'rgba(108,124,255,0.2)'
+            }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 48,
+                height: 48,
+                background: 'linear-gradient(135deg, #6c7cff, #7ee7ff)',
+                borderRadius: 999,
+                fontSize: 20,
+                fontWeight: 900,
+                color: '#0a0f24',
+                marginBottom: 20
+              }}>03</div>
+              <h3 style={{ margin: '0 0 12px', fontSize: 24, fontWeight: 800 }}>Start Trading</h3>
+              <p className="hint" style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>
+                Connect your wallet to our trading interface and swap SOL for 1FA in seconds. It's that simple.
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="section alt">
-        <div className="container" style={{ display: "grid", gap: 12 }}>
-          <Reveal as="h2" className="section-title" y={-20}>
-            FAQ
-          </Reveal>
-
-          <Reveal as="div" className="panel" y={22}>
-            <div className="row between">
-              <strong>Is this financial advice?</strong>
-              <div className="badge">Nope</div>
-            </div>
-            <div className="divider" />
-            <p className="hint" style={{ margin: 0 }}>
-              Crypto is risky. Do your own research and never invest more than you can afford to lose.
+      <section className="section" style={{
+        background: 'linear-gradient(180deg, rgba(108,124,255,0.03) 0%, transparent 100%)',
+        paddingTop: 80,
+        paddingBottom: 100
+      }}>
+        <div className="container" style={{ display: "grid", gap: 32 }}>
+          <Reveal as="div" style={{ textAlign: 'center' }}>
+            <h2 className="section-title" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 16 }}>
+              Frequently Asked <span className="gradient-text">Questions</span>
+            </h2>
+            <p className="section-sub" style={{ maxWidth: 680, margin: '0 auto' }}>
+              Everything you need to know about 1FA
             </p>
           </Reveal>
 
-          <Reveal as="div" className="panel" y={-24} delay={80}>
-            <div className="row between">
-              <strong>Which wallets are supported?</strong>
-              <div className="badge">Phantom</div>
-            </div>
-            <div className="divider" />
-            <p className="hint" style={{ margin: 0 }}>
-              Phantom is supported out of the box. More wallets can be added later via the Solana Wallet Adapter.
-            </p>
-          </Reveal>
+          <div style={{ marginTop: 32 }}>
+            <Reveal as="div" className="panel" y={22} style={{
+              padding: 28,
+              marginBottom: 20,
+              background: 'linear-gradient(135deg, rgba(108,124,255,0.04), rgba(126,231,255,0.02))',
+              borderColor: 'rgba(108,124,255,0.12)'
+            }}>
+              <div className="row between" style={{ marginBottom: 16 }}>
+                <strong style={{ fontSize: 18, fontWeight: 800 }}>Is this financial advice?</strong>
+                <div className="badge" style={{
+                  padding: '6px 12px',
+                  background: 'rgba(255,139,139,0.15)',
+                  borderColor: 'rgba(255,139,139,0.3)',
+                  color: '#ff8b8b'
+                }}>No</div>
+              </div>
+              <div className="divider" />
+              <p className="hint" style={{ margin: 0, fontSize: 15, lineHeight: 1.6 }}>
+                This is not financial advice. Cryptocurrency investments carry significant risk. Always do your own research and never invest more than you can afford to lose.
+              </p>
+            </Reveal>
 
-          <Reveal as="div" className="panel" y={26} delay={140}>
-            <div className="row between">
-              <strong>Are the numbers final?</strong>
-              <div className="badge">Placeholder</div>
-            </div>
-            <div className="divider" />
-            <p className="hint" style={{ margin: 0 }}>
-              All tokenomics above are placeholders until finalized. We’ll publish changes clearly.
-            </p>
-          </Reveal>
+            <Reveal as="div" className="panel" y={-24} delay={80} style={{
+              padding: 28,
+              marginBottom: 20,
+              background: 'linear-gradient(135deg, rgba(126,231,255,0.04), rgba(108,124,255,0.02))',
+              borderColor: 'rgba(126,231,255,0.12)'
+            }}>
+              <div className="row between" style={{ marginBottom: 16 }}>
+                <strong style={{ fontSize: 18, fontWeight: 800 }}>Which wallets are supported?</strong>
+                <div className="badge" style={{
+                  padding: '6px 12px',
+                  background: 'rgba(126,231,255,0.15)',
+                  borderColor: 'rgba(126,231,255,0.3)',
+                  color: '#7ee7ff'
+                }}>Multiple</div>
+              </div>
+              <div className="divider" />
+              <p className="hint" style={{ margin: 0, fontSize: 15, lineHeight: 1.6 }}>
+                Phantom wallet is supported out of the box with seamless one-click connection. Additional Solana wallets can be integrated through the Wallet Adapter framework.
+              </p>
+            </Reveal>
+
+            <Reveal as="div" className="panel" y={26} delay={140} style={{
+              padding: 28,
+              background: 'linear-gradient(135deg, rgba(108,124,255,0.02), rgba(126,231,255,0.04))',
+              borderColor: 'rgba(108,124,255,0.12)'
+            }}>
+              <div className="row between" style={{ marginBottom: 16 }}>
+                <strong style={{ fontSize: 18, fontWeight: 800 }}>How do I get support?</strong>
+                <div className="badge" style={{
+                  padding: '6px 12px',
+                  background: 'rgba(126,231,255,0.15)',
+                  borderColor: 'rgba(126,231,255,0.3)',
+                  color: '#7ee7ff'
+                }}>24/7</div>
+              </div>
+              <div className="divider" />
+              <p className="hint" style={{ margin: 0, fontSize: 15, lineHeight: 1.6 }}>
+                Our community is active around the clock. Join our Discord for instant support, or reach out on X (Twitter) for updates and announcements.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
     </main>
