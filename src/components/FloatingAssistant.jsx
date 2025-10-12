@@ -43,13 +43,21 @@ export default function FloatingAIAssistant({
     const el = document.createElement("style");
     el.id = "floating-ai-styles";
     el.textContent = `
-      .fa-fab{position:fixed;right:24px;bottom:24px;z-index:999999;width:56px;height:56px;border-radius:50%;border:0;background:linear-gradient(135deg,#6c7cff,#7ee7ff);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(108,124,255,.35);cursor:pointer;transition:transform .2s,box-shadow .2s;padding:0;overflow:hidden;}
-      .fa-fab:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(108,124,255,.45);}
-      .fa-fab img{width:100%;height:100%;object-fit:cover;}
+      .fa-fab{position:fixed;right:24px;bottom:24px;z-index:999999;width:64px;height:64px;border-radius:50%;border:0;background:linear-gradient(135deg,#6c7cff,#7ee7ff);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(108,124,255,.4),0 0 0 0 rgba(126,231,255,.6);cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);padding:12px;position:relative;}
+      .fa-fab::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:linear-gradient(135deg,rgba(108,124,255,.5),rgba(126,231,255,.5));filter:blur(16px);opacity:0;z-index:-1;transition:opacity .3s;}
+      .fa-fab:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 16px 48px rgba(108,124,255,.6),0 0 0 12px rgba(126,231,255,.2);}
+      .fa-fab:hover::before{opacity:1;}
+      .fa-fab:active{transform:translateY(-2px) scale(1.03);}
+      .fa-fab img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));animation:float 3s ease-in-out infinite;}
+      @keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-3px) rotate(2deg);}}
+      .fa-fab:hover img{animation:spin 0.5s ease-in-out;}
+      @keyframes spin{0%{transform:rotate(0deg) scale(1);}50%{transform:rotate(180deg) scale(1.15);}100%{transform:rotate(360deg) scale(1);}}
       .fa-overlay{position:fixed;inset:0;z-index:999998;background:rgba(6,10,22,.5);backdrop-filter:blur(4px);}
-      .fa-panel{position:fixed;right:24px;bottom:96px;z-index:999999;width:min(420px,calc(100vw - 48px));height:min(640px,calc(100vh - 140px));display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#0f1534,#0c122a);border:1px solid rgba(255,255,255,.1);box-shadow:0 20px 60px rgba(0,0,0,.6);font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;}
+      .fa-panel{position:fixed;right:24px;bottom:104px;z-index:999999;width:min(420px,calc(100vw - 48px));height:min(640px,calc(100vh - 140px));display:flex;flex-direction:column;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0f1534,#0c122a);border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 72px rgba(0,0,0,.7),0 0 0 1px rgba(126,231,255,.08) inset;font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;animation:slideUp .35s cubic-bezier(.34,1.56,.64,1);}
+      @keyframes slideUp{from{opacity:0;transform:translateY(20px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
       .fa-head{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-      .fa-title{font-size:15px;font-weight:700;color:#e7ecff;display:flex;align-items:center;gap:8px;letter-spacing:-.01em;}
+      .fa-title{font-size:15px;font-weight:700;color:#e7ecff;display:flex;align-items:center;gap:10px;letter-spacing:-.01em;}
+      .fa-title img{width:24px;height:24px;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(108,124,255,.3));}
       .fa-x{background:transparent;border:0;color:#a7b0d6;cursor:pointer;padding:6px;border-radius:8px;transition:all .15s;width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
       .fa-x:hover{background:rgba(255,255,255,.08);color:#e7ecff;}
       .fa-body{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;background:transparent;}
@@ -254,6 +262,7 @@ export default function FloatingAIAssistant({
           <section className="fa-panel" role="dialog" aria-label="AI Assistant">
             <header className="fa-head">
               <div className="fa-title">
+                <img src="/1fa-logo.png" alt="1FA" />
                 1FA Assistant
               </div>
               <button className="fa-x" onClick={() => setOpen(false)} aria-label="Close">
