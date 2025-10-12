@@ -369,7 +369,7 @@ function DiscoverTrending() {
   );
 }
 
-/* ---------- export both ways so routes don't break ---------- */
+/* ---------- export both ways so routes don’t break ---------- */
 function AxiomLike() {
   return (
     <ErrorBoundary>
