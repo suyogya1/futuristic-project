@@ -37,43 +37,62 @@ export default function FloatingAIAssistant({
   const textRef = useRef(null);
   const chatRef = useRef(null);
 
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add('fa-open');
+    } else {
+      document.body.classList.remove('fa-open');
+    }
+    return () => document.body.classList.remove('fa-open');
+  }, [open]);
+
   /* ---------------- Scoped styles ---------------- */
   useEffect(() => {
     if (document.getElementById("floating-ai-styles")) return;
     const el = document.createElement("style");
     el.id = "floating-ai-styles";
     el.textContent = `
-      :root{
-        --fa-bg:#0f1534; --fa-bg-2:#0c122a; --fa-text:#e7ecff; --fa-muted:#a7b0d6;
-        --fa-ring:rgba(124,139,255,.45); --fa-brand:#6c7cff; --fa-brand2:#7ee7ff;
-        --fa-elev:0 18px 48px rgba(0,0,0,.45); --fa-brd:rgba(255,255,255,.10);
-      }
-      .fa-fab{position:fixed;right:18px;bottom:18px;z-index:2147483200;width:56px;height:56px;border-radius:999px;border:1px solid transparent;background:linear-gradient(135deg,var(--fa-brand),var(--fa-brand2));color:#0a0f24;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 14px 28px rgba(108,124,255,.32),0 0 0 6px var(--fa-ring);cursor:pointer;transition:transform .12s ease,box-shadow .18s ease,filter .2s ease;}
-      .fa-fab:hover{transform:translateY(-1px) scale(1.02);filter:saturate(1.03);}
-      .fa-fab:active{transform:translateY(0) scale(.98);}
-      .fa-overlay{position:fixed;inset:0;z-index:2147483100;background:radial-gradient(800px 380px at 70% 8%,rgba(108,124,255,.10),transparent 60%),rgba(6,10,22,0.46);backdrop-filter:blur(3px);}
-      .fa-panel{position:fixed;right:16px;bottom:86px;z-index:2147483300;width:min(420px,92vw);max-height:min(72vh,680px);display:grid;grid-template-rows:auto 1fr auto;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--fa-bg),var(--fa-bg-2));border:1px solid var(--fa-brd);box-shadow:var(--fa-elev),0 0 0 1px rgba(126,231,255,.05) inset;animation:fa-in .24s cubic-bezier(.22,.8,.34,1);}
-      @keyframes fa-in{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
-      .fa-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--fa-brd);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0));color:var(--fa-text);}
-      .fa-title{display:flex;align-items:center;gap:10px;font-weight:800;}
-      .fa-badge{font-size:12px;padding:4px 8px;border-radius:999px;font-weight:800;color:#0a0f24;background:linear-gradient(135deg,var(--fa-brand),var(--fa-brand2));box-shadow:0 6px 16px rgba(108,124,255,.3);}
-      .fa-actions{display:flex;align-items:center;gap:8px;color:var(--fa-muted);font-size:12px;}
-      .fa-x{background:transparent;border:0;color:var(--fa-text);opacity:.9;font-size:20px;line-height:1;padding:6px 8px;border-radius:10px;cursor:pointer;}
-      .fa-x:hover{opacity:1;background:rgba(255,255,255,.08);}
-      .fa-body{padding:10px;color:var(--fa-text);overflow:auto;overscroll-behavior:contain;}
-      .fa-body::-webkit-scrollbar{width:10px;}
-      .fa-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
-      .fa-body::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.18);}
-      .fa-msg{max-width:85%;padding:10px 12px;border-radius:12px;border:1px solid var(--fa-brd);background:rgba(255,255,255,.04);margin:6px 0;white-space:pre-wrap;word-break:break-word;}
-      .fa-msg.user{margin-left:auto;background:rgba(124,139,255,.16);border-color:rgba(124,139,255,.32);}
-      .fa-msg.assistant{background:rgba(255,255,255,.04);}
-      .fa-err{color:#ffb4b4;font-size:13px;margin:6px 2px 0;}
-      .fa-foot{padding:10px;border-top:1px solid var(--fa-brd);background:linear-gradient(0deg,rgba(255,255,255,.04),rgba(255,255,255,0));display:grid;gap:8px;}
-      .fa-input{display:flex;align-items:center;gap:8px;border:1px solid var(--fa-brd);background:rgba(255,255,255,.06);border-radius:12px;padding:8px;}
-      .fa-input textarea{all:unset;color:var(--fa-text);font:inherit;min-height:22px;max-height:120px;overflow:auto;width:100%;}
-      .fa-btn{background:linear-gradient(135deg,var(--fa-brand),var(--fa-brand2));color:#0a0f24;border:0;border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(108,124,255,.30);}
-      .fa-btn[disabled]{opacity:.6;cursor:not-allowed;box-shadow:none;}
-      .fa-hint{color:var(--fa-muted);font-size:12px;margin:0 2px;}
+      .fa-fab{position:fixed;right:32px;bottom:32px;z-index:999999;width:72px;height:72px;border:0;background:transparent;padding:0;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 8px 24px rgba(108,124,255,.45));}
+      .fa-fab::before{content:'';position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,rgba(108,124,255,.3),rgba(126,231,255,.2));filter:blur(20px);opacity:0;z-index:-1;transition:opacity .3s;}
+      .fa-fab:hover{transform:translateY(-6px) scale(1.1);filter:drop-shadow(0 16px 40px rgba(108,124,255,.7));}
+      .fa-fab:hover::before{opacity:1;}
+      .fa-fab:active{transform:translateY(-3px) scale(1.05);}
+      .fa-fab img{width:100%;height:100%;object-fit:contain;animation:float 3s ease-in-out infinite;border-radius:20%;}
+      @keyframes float{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-4px) rotate(2deg);}}
+      .fa-fab:hover img{animation:spinPulse 0.6s ease-in-out;}
+      @keyframes spinPulse{0%{transform:rotate(0deg) scale(1);}25%{transform:rotate(90deg) scale(1.15);}50%{transform:rotate(180deg) scale(1.05);}75%{transform:rotate(270deg) scale(1.15);}100%{transform:rotate(360deg) scale(1);}}
+      .fa-overlay{position:fixed;inset:0;z-index:999998;background:rgba(6,10,22,.5);backdrop-filter:blur(4px);overscroll-behavior:contain;}
+      .fa-panel{position:fixed;right:32px;bottom:120px;z-index:999999;width:min(420px,calc(100vw - 64px));max-height:calc(100vh - 170px);display:flex;flex-direction:column;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0f1534,#0c122a);border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 72px rgba(0,0,0,.7),0 0 0 1px rgba(126,231,255,.08) inset;font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;animation:slideUp .35s cubic-bezier(.34,1.56,.64,1);overscroll-behavior:contain;}
+      @keyframes slideUp{from{opacity:0;transform:translateY(20px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+      body.fa-open{overflow:hidden;}
+      .fa-head{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+      .fa-title{font-size:15px;font-weight:700;color:#e7ecff;display:flex;align-items:center;gap:10px;letter-spacing:-.01em;}
+      .fa-title img{width:24px;height:24px;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(108,124,255,.3));}
+      .fa-x{background:transparent;border:0;color:#a7b0d6;cursor:pointer;padding:6px;border-radius:8px;transition:all .15s;width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
+      .fa-x:hover{background:rgba(255,255,255,.08);color:#e7ecff;}
+      .fa-body{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;background:transparent;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+      .fa-body::-webkit-scrollbar{width:6px;}
+      .fa-body::-webkit-scrollbar-track{background:transparent;}
+      .fa-body::-webkit-scrollbar-thumb{background:rgba(126,231,255,.2);border-radius:10px;}
+      .fa-body::-webkit-scrollbar-thumb:hover{background:rgba(126,231,255,.3);}
+      .fa-msg{max-width:80%;padding:12px 14px;border-radius:14px;line-height:1.5;font-size:14px;margin:0;}
+      .fa-msg.user{margin-left:auto;background:linear-gradient(135deg,#6c7cff,#7ee7ff);color:#fff;border-radius:14px 14px 4px 14px;font-weight:500;}
+      .fa-msg.assistant{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#e7ecff;border-radius:14px 14px 14px 4px;}
+      .fa-err{padding:12px 14px;background:rgba(255,139,139,.12);border:1px solid rgba(255,139,139,.25);border-radius:10px;color:#ffb4b4;font-size:13px;line-height:1.5;}
+      .fa-foot{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);flex-shrink:0;}
+      .fa-input{display:flex;align-items:flex-end;gap:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;transition:all .2s;}
+      .fa-input:focus-within{border-color:rgba(126,231,255,.35);background:rgba(255,255,255,.08);box-shadow:0 0 0 4px rgba(124,139,255,.15);}
+      .fa-input textarea{all:unset;color:#e7ecff;font-family:inherit;font-size:14px;line-height:1.5;min-height:22px;max-height:100px;overflow:auto;width:100%;}
+      .fa-input textarea::placeholder{color:#a7b0d6;opacity:.6;}
+      .fa-btn{width:36px;height:36px;flex-shrink:0;background:linear-gradient(135deg,#6c7cff,#7ee7ff);color:#fff;border:0;border-radius:10px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+      .fa-btn:hover:not([disabled]){transform:scale(1.05);box-shadow:0 4px 12px rgba(108,124,255,.4);}
+      .fa-btn:active:not([disabled]){transform:scale(.95);}
+      .fa-btn[disabled]{opacity:.4;cursor:not-allowed;}
+      .fa-typing{display:flex;gap:5px;}
+      .fa-typing span{width:6px;height:6px;background:rgba(126,231,255,.6);border-radius:50%;animation:typing .8s infinite;}
+      .fa-typing span:nth-child(2){animation-delay:.15s;}
+      .fa-typing span:nth-child(3){animation-delay:.3s;}
+      @keyframes typing{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}}
     `;
     document.head.appendChild(el);
   }, []);
@@ -242,7 +261,9 @@ export default function FloatingAIAssistant({
   return (
     <>
       {!open && (
-        <button className="fa-fab" onClick={() => setOpen(true)} title="Assistant">AI</button>
+        <button className="fa-fab" onClick={() => setOpen(true)} aria-label="Chat">
+          <img src="/1fa-logo.png" alt="1FA Assistant" />
+        </button>
       )}
 
       {open && (
@@ -251,13 +272,14 @@ export default function FloatingAIAssistant({
           <section className="fa-panel" role="dialog" aria-label="AI Assistant">
             <header className="fa-head">
               <div className="fa-title">
-                <span className="fa-badge">AI</span>
-                Assistant
+                <img src="/1fa-logo.png" alt="1FA" />
+                1FA Assistant
               </div>
-              <div className="fa-actions">
-                <span>{headerRight}</span>
-                <button className="fa-x" onClick={() => setOpen(false)} aria-label="Close">×</button>
-              </div>
+              <button className="fa-x" onClick={() => setOpen(false)} aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
             </header>
 
             <div className="fa-body" ref={scrollerRef}>
@@ -266,8 +288,14 @@ export default function FloatingAIAssistant({
                   {m.content}
                 </div>
               ))}
-              {error && <div className="fa-err">⚠ {error}</div>}
-              {busy && <div className="fa-msg assistant">…</div>}
+              {error && <div className="fa-err">{error}</div>}
+              {busy && (
+                <div className="fa-msg assistant">
+                  <div className="fa-typing">
+                    <span/><span/><span/>
+                  </div>
+                </div>
+              )}
             </div>
 
             <footer className="fa-foot">
@@ -277,15 +305,14 @@ export default function FloatingAIAssistant({
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={onKeyDown}
-                  placeholder={placeholder}
+                  placeholder="Message 1FA Assistant"
                   disabled={busy}
                 />
                 <button className="fa-btn" onClick={onSend} disabled={busy || !input.trim() || resolving}>
-                  {busy ? "Sending…" : "Send"}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                  </svg>
                 </button>
-              </div>
-              <div className="fa-hint">
-                {apiKey ? "Free model(s) will be used automatically" : "No API key detected"}
               </div>
             </footer>
           </section>
