@@ -55,7 +55,27 @@ const globalCSS = `
   .scene:hover .card3d { animation-play-state: paused; }
   .face3d{ position:absolute; inset:0; border-radius:20px; backface-visibility:hidden; overflow:hidden; background:#0b0f15; }
   .front{ transform: translateZ(calc(var(--t)/2)); }
-  .back{ transform: rotateY(180deg) translateZ(calc(var(--t)/2)); background: #000; }
+  .back{
+    transform: rotateY(180deg) translateZ(calc(var(--t)/2));
+    background: radial-gradient(circle at 50% 30%, rgba(17,24,39,0.95), #000 70%);
+    position: relative;
+  }
+  .back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(126,231,255,0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 60%, rgba(108,124,255,0.03) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(126,231,255,0.02) 0%, transparent 50%);
+    animation: float-particles 8s ease-in-out infinite;
+  }
+  @keyframes float-particles {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(10px, -10px); }
+    50% { transform: translate(-5px, 10px); }
+    75% { transform: translate(5px, 5px); }
+  }
   
   /** UPDATED: CSS for frontImage to fit inside the frame */
   .frontImage {
@@ -86,11 +106,44 @@ const globalCSS = `
     align-items: center;
     text-align: center;
     background: linear-gradient(160deg, rgba(17,24,39,0.95) 0%, rgba(11,15,25,0.98) 100%);
+    overflow: hidden;
+  }
+  .back-text-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(126,231,255,0.08), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  .card3d:hover .back-text-content::before {
+    opacity: 1;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.6; }
+  }
+  .back-text-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(126,231,255,0.15), transparent);
+    transition: left 0.8s ease;
+  }
+  .card3d:hover .back-text-content::after {
+    left: 100%;
   }
   .back-token-large {
     font-size: 16px;
     font-weight: 900;
-    color: #7ee7ff;
     background: linear-gradient(135deg, #7ee7ff, #6c7cff);
     -webkit-background-clip: text;
     background-clip: text;
@@ -101,21 +154,50 @@ const globalCSS = `
     padding: 8px 16px;
     border: 1px solid rgba(126,231,255,0.25);
     border-radius: 999px;
-    background-origin: border-box;
-    background-clip: text, border-box;
     position: relative;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(126,231,255,0));
+  }
+  .card3d:hover .back-token-large {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 12px rgba(126,231,255,0.6));
+    border-color: rgba(126,231,255,0.45);
   }
   .back-token-large::before {
     content: '';
     position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(126,231,255,0.5), rgba(108,124,255,0.4));
+    opacity: 0;
+    filter: blur(8px);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  .card3d:hover .back-token-large::before {
+    opacity: 1;
+    animation: rotate-border 3s linear infinite;
+  }
+  @keyframes rotate-border {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .back-token-large::after {
+    content: '';
+    position: absolute;
     inset: 0;
     border-radius: 999px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(126,231,255,0.4), rgba(108,124,255,0.3));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    background: linear-gradient(135deg, rgba(126,231,255,0.15), rgba(108,124,255,0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .card3d:hover .back-token-large::after {
+    opacity: 1;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
   }
   .back-message-main {
     font-size: 15px;
@@ -128,13 +210,22 @@ const globalCSS = `
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 8px;
+    padding: 12px 8px;
     max-height: 160px;
     overflow-y: auto;
+    position: relative;
+    transition: all 0.4s ease;
+    border-radius: 12px;
+  }
+  .card3d:hover .back-message-main {
+    transform: translateY(-3px);
+    text-shadow: 0 2px 12px rgba(126,231,255,0.3);
+    color: #fff;
   }
   .back-message-main::-webkit-scrollbar { width: 4px; }
   .back-message-main::-webkit-scrollbar-track { background: transparent; }
   .back-message-main::-webkit-scrollbar-thumb { background: rgba(126,231,255,0.3); border-radius: 4px; }
+  .back-message-main::-webkit-scrollbar-thumb:hover { background: rgba(126,231,255,0.5); }
 
   .side{ position:absolute; opacity:.98 }
   .side.left  { width:var(--t); height:var(--h); left:calc(var(--w)/2 - var(--t)/2); top:0; transform: rotateY(90deg) translateZ(calc(var(--w)/2)) }
@@ -144,6 +235,16 @@ const globalCSS = `
   .goldSide{
     background: linear-gradient(135deg, rgba(126,231,255,0.85), rgba(108,124,255,0.75));
     box-shadow: inset 0 0 8px rgba(126,231,255,.4), 0 0 20px rgba(126,231,255,.3);
+    transition: all 0.4s ease;
+  }
+  .card3d:hover .goldSide {
+    background: linear-gradient(135deg, rgba(126,231,255,0.95), rgba(108,124,255,0.85));
+    box-shadow: inset 0 0 12px rgba(126,231,255,.6), 0 0 30px rgba(126,231,255,.5);
+    animation: edge-pulse 2s ease-in-out infinite;
+  }
+  @keyframes edge-pulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
   }
   .voteBtn{
     padding: 12px 24px;
@@ -169,17 +270,39 @@ const globalCSS = `
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(126,231,255,0.3), transparent);
-    transition: left .5s ease;
+    background: linear-gradient(90deg, transparent, rgba(126,231,255,0.4), transparent);
+    transition: left .6s ease;
+  }
+  .voteBtn::after {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(126,231,255,0.4), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   .voteBtn:hover::before {
     left: 100%;
   }
+  .voteBtn:hover::after {
+    opacity: 1;
+    animation: button-glow 1.5s ease-in-out infinite;
+  }
+  @keyframes button-glow {
+    0%, 100% { transform: scale(0.8); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.6; }
+  }
   .voteBtn:hover{
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(126,231,255,.4), 0 0 0 1px rgba(126,231,255,.2) inset;
-    border-color: rgba(126,231,255,.5);
-    background: linear-gradient(145deg, rgba(126,231,255,0.18), rgba(108,124,255,0.12));
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 12px 40px rgba(126,231,255,.5), 0 0 0 1px rgba(126,231,255,.3) inset;
+    border-color: rgba(126,231,255,.6);
+    background: linear-gradient(145deg, rgba(126,231,255,0.22), rgba(108,124,255,0.15));
+    text-shadow: 0 0 10px rgba(126,231,255,0.8);
+    animation: btn-bounce 0.6s ease;
+  }
+  @keyframes btn-bounce {
+    0%, 100% { transform: translateY(-3px) scale(1.08); }
+    50% { transform: translateY(-5px) scale(1.1); }
   }
   .voteBtn:active{
     transform: translateY(0) scale(.98);
@@ -192,6 +315,10 @@ const globalCSS = `
   .voteBtn:disabled:hover {
     transform: none;
     box-shadow: 0 4px 20px rgba(126,231,255,.25), 0 0 0 1px rgba(126,231,255,.1) inset;
+    animation: none;
+  }
+  .voteBtn:disabled::after {
+    display: none;
   }
 
   /* --- Styles for Modals and Uploader --- */
