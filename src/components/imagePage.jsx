@@ -56,7 +56,7 @@ const globalCSS = `
   @keyframes spinY { from{ transform: rotateY(0) } to{ transform: rotateY(360deg) } }
   .scene:hover .card3d {
     animation-play-state: paused;
-    box-shadow: 0 40px 100px rgba(0,0,0,.65), 0 0 60px rgba(251,191,36,.25);
+    box-shadow: 0 40px 100px rgba(0,0,0,.65), 0 0 60px rgba(126,231,255,.25);
   }
   .face3d{ position:absolute; inset:0; border-radius:20px; backface-visibility:hidden; overflow:hidden; background:#0b0f15; }
   .front{ transform: translateZ(calc(var(--t)/2)); }
@@ -91,7 +91,7 @@ const globalCSS = `
     left: -50%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(251,191,36,0.08), transparent 60deg);
+    background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(126,231,255,0.1), transparent 60deg);
     animation: rotate-frame 8s linear infinite;
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -104,7 +104,7 @@ const globalCSS = `
     opacity: 1;
   }
   .card3d:hover .frameArea {
-    box-shadow: inset 0 0 0 1px rgba(251,191,36,.3), inset 0 -18px 38px rgba(0,0,0,.45), 0 0 25px rgba(251,191,36,.2);
+    box-shadow: inset 0 0 0 1px rgba(126,231,255,.3), inset 0 -18px 38px rgba(0,0,0,.45), 0 0 25px rgba(126,231,255,.2);
   }
   .back-text-content {
     position: absolute;
@@ -118,10 +118,12 @@ const globalCSS = `
     justify-content: space-between;
     text-align: center;
     border-radius: 14px;
-    background: linear-gradient(145deg, rgba(15,23,42,0.4), rgba(7,15,32,0.6));
-    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, rgba(108,124,255,0.08), rgba(126,231,255,0.04));
+    backdrop-filter: blur(12px);
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(108,124,255,0.15);
+    transition: all 0.4s ease;
   }
   .back-text-content::before {
     content: '';
@@ -130,9 +132,13 @@ const globalCSS = `
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(250,204,21,0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(126,231,255,0.6), transparent);
     opacity: 0;
     transition: opacity 0.4s ease;
+  }
+  .card3d:hover .back-text-content {
+    background: linear-gradient(135deg, rgba(108,124,255,0.12), rgba(126,231,255,0.06));
+    border-color: rgba(126,231,255,0.3);
   }
   .card3d:hover .back-text-content::before {
     opacity: 1;
@@ -144,7 +150,7 @@ const globalCSS = `
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(250,204,21,0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(126,231,255,0.6), transparent);
     opacity: 0;
     transition: opacity 0.4s ease;
   }
@@ -154,16 +160,16 @@ const globalCSS = `
   .back-token-large {
     font-size: 14px;
     font-weight: 900;
-    color: #fcd34d;
+    color: #7ee7ff;
     letter-spacing: 3px;
     text-transform: uppercase;
     position: relative;
     padding: 10px 20px;
-    background: linear-gradient(135deg, rgba(252,211,77,0.1), rgba(251,191,36,0.05));
-    border: 1px solid rgba(252,211,77,0.3);
+    background: linear-gradient(135deg, rgba(126,231,255,0.12), rgba(108,124,255,0.08));
+    border: 1px solid rgba(126,231,255,0.3);
     border-radius: 8px;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 15px rgba(252,211,77,0.1);
+    box-shadow: 0 4px 15px rgba(126,231,255,0.15);
   }
   .back-token-large::before {
     content: '';
@@ -171,7 +177,7 @@ const globalCSS = `
     inset: 0;
     border-radius: 8px;
     padding: 2px;
-    background: linear-gradient(135deg, rgba(252,211,77,0.5), rgba(251,191,36,0.3));
+    background: linear-gradient(135deg, rgba(126,231,255,0.5), rgba(108,124,255,0.3));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -180,8 +186,8 @@ const globalCSS = `
   }
   .card3d:hover .back-token-large {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(252,211,77,0.3);
-    border-color: rgba(252,211,77,0.5);
+    box-shadow: 0 8px 25px rgba(126,231,255,0.3);
+    border-color: rgba(126,231,255,0.5);
   }
   .card3d:hover .back-token-large::before {
     opacity: 1;
@@ -209,7 +215,7 @@ const globalCSS = `
     top: 0;
     left: 0;
     font-size: 48px;
-    color: rgba(252,211,77,0.15);
+    color: rgba(126,231,255,0.15);
     font-family: Georgia, serif;
     line-height: 1;
     transition: all 0.4s ease;
@@ -220,7 +226,7 @@ const globalCSS = `
     bottom: -10px;
     right: 0;
     font-size: 48px;
-    color: rgba(252,211,77,0.15);
+    color: rgba(126,231,255,0.15);
     font-family: Georgia, serif;
     line-height: 1;
     transition: all 0.4s ease;
@@ -231,12 +237,12 @@ const globalCSS = `
   }
   .card3d:hover .back-message-main::before,
   .card3d:hover .back-message-main::after {
-    color: rgba(252,211,77,0.3);
+    color: rgba(126,231,255,0.3);
   }
   .back-message-main::-webkit-scrollbar { width: 3px; }
   .back-message-main::-webkit-scrollbar-track { background: transparent; }
-  .back-message-main::-webkit-scrollbar-thumb { background: rgba(252,211,77,0.3); border-radius: 3px; }
-  .back-message-main::-webkit-scrollbar-thumb:hover { background: rgba(252,211,77,0.5); }
+  .back-message-main::-webkit-scrollbar-thumb { background: rgba(126,231,255,0.3); border-radius: 3px; }
+  .back-message-main::-webkit-scrollbar-thumb:hover { background: rgba(126,231,255,0.5); }
 
   .side{ position:absolute; opacity:.98 }
   .side.left  { width:var(--t); height:var(--h); left:calc(var(--w)/2 - var(--t)/2); top:0; transform: rotateY(90deg) translateZ(calc(var(--w)/2)) }
@@ -244,26 +250,26 @@ const globalCSS = `
   .side.top   { width:var(--w); height:var(--t); left:0; top:calc(var(--h)/2 - var(--t)/2); transform: rotateX(90deg) translateZ(calc(var(--h)/2)) }
   .side.bottom{ width:var(--w); height:var(--t); left:0; top:calc(var(--h)/2 - var(--t)/2); transform: rotateX(90deg) translateZ(calc(-1 * var(--h)/2)) }
   .goldSide{
-    background: linear-gradient(180deg, #fef08a 0%, #facc15 40%, #f59e0b 70%, #b45309 100%);
-    box-shadow: inset 0 0 4px rgba(255,255,255,.4), 0 0 16px rgba(255,215,0,.25);
+    background: linear-gradient(135deg, #7ee7ff 0%, #6c7cff 50%, #5563d1 100%);
+    box-shadow: inset 0 0 4px rgba(255,255,255,.4), 0 0 16px rgba(126,231,255,.3);
     transition: all 0.3s ease;
   }
   .card3d:hover .goldSide {
-    box-shadow: inset 0 0 6px rgba(255,255,255,.5), 0 0 24px rgba(255,215,0,.4);
+    box-shadow: inset 0 0 6px rgba(255,255,255,.5), 0 0 24px rgba(126,231,255,.5);
   }
   .voteBtn{
     padding: 14px 32px;
     border-radius: 12px;
     border: 2px solid transparent;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b) padding-box,
-                linear-gradient(135deg, #fcd34d, #f59e0b) border-box;
-    color: #1e293b;
+    background: linear-gradient(135deg, #6c7cff, #7ee7ff) padding-box,
+                linear-gradient(135deg, #6c7cff, #7ee7ff) border-box;
+    color: #0a0f24;
     font-weight: 800;
     font-size: 13px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(251,191,36,0.4), inset 0 -2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 20px rgba(108,124,255,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
@@ -276,7 +282,7 @@ const globalCSS = `
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.4);
     transform: translate(-50%, -50%);
     transition: width 0.6s ease, height 0.6s ease;
   }
@@ -286,7 +292,7 @@ const globalCSS = `
   }
   .voteBtn:hover{
     transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 12px 30px rgba(251,191,36,0.5), inset 0 -2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 30px rgba(108,124,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
     filter: brightness(1.1);
   }
   .voteBtn:active{
@@ -299,7 +305,7 @@ const globalCSS = `
   }
   .voteBtn:disabled:hover {
     transform: none;
-    box-shadow: 0 6px 20px rgba(251,191,36,0.4), inset 0 -2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 20px rgba(108,124,255,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
     filter: brightness(1) grayscale(0.5);
   }
   .voteBtn:disabled::before {
