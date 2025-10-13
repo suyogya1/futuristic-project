@@ -4,7 +4,7 @@ import Landing from "./pages/Landing.jsx";
 import BuySell from "./pages/BuySell.jsx";
 import Axiom from "./pages/Axiom.jsx";
 import Rewards from "./pages/Rewards.jsx";
-import ImagePage from "./components/imagePage.jsx";
+import ImagePage from "./components/ImagePageWithDB.jsx";
 import FloatingAIAssistant from "./components/FloatingAssistant.jsx";
 import SendMessagePage from "./components/sendMessagePage.jsx";
 
