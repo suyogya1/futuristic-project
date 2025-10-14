@@ -241,8 +241,13 @@ export default function Landing() {
               color: '#7ee7ff',
               marginBottom: 24
             }}>
+<<<<<<< HEAD
               <span style={{ fontSize: 16 }}></span>
               Earn & Learn
+=======
+              <span style={{ fontSize: 16 }}>⚡</span>
+              Built on Solana
+>>>>>>> af008e89bb945bf533a37f626952b75a59eff688
             </div>
           </Reveal>
 

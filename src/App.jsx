@@ -2,9 +2,9 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Landing from "./pages/Landing.jsx";
 import BuySell from "./pages/BuySell.jsx";
-import Axiom from "./pages/axiom.jsx";
-import Rewards from "./pages/rewards.jsx";
-import ImagePage from "./components/imagePage.jsx";
+import Axiom from "./pages/Axiom.jsx";
+import Rewards from "./pages/Rewards.jsx";
+import ImagePage from "./components/ImagePageWithDB.jsx";
 import FloatingAIAssistant from "./components/FloatingAssistant.jsx";
 import SendMessagePage from "./components/sendMessagePage.jsx";
 

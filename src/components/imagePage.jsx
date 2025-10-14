@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 /** ---------- 3D Card Dimensions (keep in sync with CSS) ---------- */
@@ -386,6 +387,9 @@ export default function ImagePage() {
   useEffect(() => {
     try {
       localStorage.setItem("meme_cards", JSON.stringify(cards));
+=======
+Item("meme_cards", JSON.stringify(cards));
+>>>>>>> af008e89bb945bf533a37f626952b75a59eff688
     } catch (error) {
       console.error("Failed to save cards to localStorage:", error);
       alert("Could not save cards. The browser's storage might be full.");

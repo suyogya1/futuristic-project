@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Reveal from "./reveal";
+import Reveal from "./Reveal";
 
 /** Generic clickable bento item
  * - Uses <Link> when `to` is provided
@@ -17,9 +17,24 @@ const Item = ({
 }) => {
   const Comp = to ? Link : As;
   const compProps = to ? { to } : { ...rest };
+  const cardRef = React.useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    cardRef.current.style.setProperty('--mx', `${x}%`);
+    cardRef.current.style.setProperty('--my', `${y}%`);
+  };
 
   return (
-    <Reveal y={20} className={`bento-card ${className}`}>
+    <Reveal
+      y={20}
+      className={`bento-card ${className}`}
+      onMouseMove={handleMouseMove}
+      ref={cardRef}
+    >
       <Comp
         {...compProps}
         className="bento-inner"
