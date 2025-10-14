@@ -2,9 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Landing from "./pages/Landing.jsx";
 import BuySell from "./pages/BuySell.jsx";
-import Axiom from "./pages/Axiom.jsx";
-import Rewards from "./pages/Rewards.jsx";
-import ImagePage from "./components/ImagePageWithDB.jsx";
+// FIX: Removed unused 'Axiom' and 'Rewards' imports
 import FloatingAIAssistant from "./components/FloatingAssistant.jsx";
 import SendMessagePage from "./components/sendMessagePage.jsx";
 
@@ -89,7 +87,6 @@ function LoadingScreen({ onLoaded }) {
 
   return (
     <div className={`loading-screen ${isExiting ? 'exiting' : ''}`}>
-      {/* FIXED: The path for items in the 'public' folder starts from the root '/' */}
       <img src="/1fa-logo.png" alt="Loading Logo" className="loading-logo" />
       <div className="loading-brand">One For All</div>
       <div className="progress-bar-container">
@@ -145,24 +142,32 @@ function Nav() {
   );
 }
 
+// FIX: Define a placeholder for the missing ImagePage component.
+// You should replace this with your actual component import.
+function ImagePage() {
+    return (
+        <div style={{ padding: '2rem', textAlign: 'center' }}>
+            <h1>Meme Battle Page</h1>
+            <p>Content for the meme battle will go here.</p>
+        </div>
+    );
+}
+
 // --- UPDATED APP COMPONENT ---
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
-  // IMPROVEMENT: Use useCallback to memoize the function, preventing potential re-renders.
   const handleLoaded = useCallback(() => {
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    // Inject CSS for loading screen
     const styleTag = document.createElement("style");
     styleTag.id = "loading-screen-styles";
     styleTag.textContent = loadingScreenCSS;
     document.head.appendChild(styleTag);
     
-    // Create background layer
     let bg = document.getElementById("page-bg-layer");
     if (!bg) {
       bg = document.createElement("div");
@@ -171,14 +176,13 @@ export default function App() {
       document.body.appendChild(bg);
     }
 
-    // FIXED: Add a cleanup function to remove the styles when the component unmounts.
     return () => {
       const existingStyleTag = document.getElementById("loading-screen-styles");
       if (existingStyleTag) {
         document.head.removeChild(existingStyleTag);
       }
     };
-  }, []); // Empty array ensures this runs only once.
+  }, []);
 
   if (isLoading) {
     return <LoadingScreen onLoaded={handleLoaded} />;
