@@ -43,37 +43,51 @@ export default function FloatingAIAssistant({
     const el = document.createElement("style");
     el.id = "floating-ai-styles";
     el.textContent = `
-      :root{
-        --fa-bg:#0f1534; --fa-bg-2:#0c122a; --fa-text:#e7ecff; --fa-muted:#a7b0d6;
-        --fa-ring:rgba(124,139,255,.45); --fa-brand:#6c7cff; --fa-brand2:#7ee7ff;
-        --fa-elev:0 18px 48px rgba(0,0,0,.45); --fa-brd:rgba(255,255,255,.10);
-      }
-      .fa-fab{position:fixed;right:18px;bottom:18px;z-index:2147483200;width:56px;height:56px;border-radius:999px;border:1px solid transparent;background:linear-gradient(135deg,var(--fa-brand),var(--fa-brand2));color:#0a0f24;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 14px 28px rgba(108,124,255,.32),0 0 0 6px var(--fa-ring);cursor:pointer;transition:transform .12s ease,box-shadow .18s ease,filter .2s ease;}
-      .fa-fab:hover{transform:translateY(-1px) scale(1.02);filter:saturate(1.03);}
-      .fa-fab:active{transform:translateY(0) scale(.98);}
-      .fa-overlay{position:fixed;inset:0;z-index:2147483100;background:radial-gradient(800px 380px at 70% 8%,rgba(108,124,255,.10),transparent 60%),rgba(6,10,22,0.46);backdrop-filter:blur(3px);}
-      .fa-panel{position:fixed;right:16px;bottom:86px;z-index:2147483300;width:min(420px,92vw);max-height:min(72vh,680px);display:grid;grid-template-rows:auto 1fr auto;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--fa-bg),var(--fa-bg-2));border:1px solid var(--fa-brd);box-shadow:var(--fa-elev),0 0 0 1px rgba(126,231,255,.05) inset;animation:fa-in .24s cubic-bezier(.22,.8,.34,1);}
+      .fa-fab{position:fixed;right:18px;bottom:18px;z-index:2147483200;width:90px;height:90px;border:none;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s ease;padding:0;outline:none;}
+      .fa-fab img{width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(108,124,255,.25));transition:all .25s ease;}
+      .fa-fab:hover img{transform:translateY(-2px) scale(1.04);filter:drop-shadow(0 10px 28px rgba(108,124,255,.4));}
+      .fa-fab:active img{transform:translateY(0) scale(1);}
+      .fa-overlay{position:fixed;inset:0;z-index:2147483100;background:radial-gradient(800px 380px at 70% 10%,rgba(108,124,255,.10),transparent 60%),rgba(6,10,22,0.46);backdrop-filter:blur(3px);}
+      .fa-panel{position:fixed;right:16px;bottom:108px;z-index:2147483300;width:min(420px,92vw);max-height:min(72vh,680px);display:grid;grid-template-rows:auto 1fr auto;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0f1534,#0c122a);border:1px solid rgba(255,255,255,0.06);box-shadow:0 18px 60px rgba(0,0,0,.55),0 0 0 1px rgba(126,231,255,.03) inset;animation:fa-in .24s cubic-bezier(.22,.8,.34,1);}
       @keyframes fa-in{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
-      .fa-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--fa-brd);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0));color:var(--fa-text);}
-      .fa-title{display:flex;align-items:center;gap:10px;font-weight:800;}
-      .fa-badge{font-size:12px;padding:4px 8px;border-radius:999px;font-weight:800;color:#0a0f24;background:linear-gradient(135deg,var(--fa-brand),var(--fa-brand2));box-shadow:0 6px 16px rgba(108,124,255,.3);}
-      .fa-actions{display:flex;align-items:center;gap:8px;color:var(--fa-muted);font-size:12px;}
-      .fa-x{background:transparent;border:0;color:var(--fa-text);opacity:.9;font-size:20px;line-height:1;padding:6px 8px;border-radius:10px;cursor:pointer;}
-      .fa-x:hover{opacity:1;background:rgba(255,255,255,.08);}
-      .fa-body{padding:10px;color:var(--fa-text);overflow:auto;overscroll-behavior:contain;}
-      .fa-body::-webkit-scrollbar{width:10px;}
-      .fa-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
-      .fa-body::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.18);}
-      .fa-msg{max-width:85%;padding:10px 12px;border-radius:12px;border:1px solid var(--fa-brd);background:rgba(255,255,255,.04);margin:6px 0;white-space:pre-wrap;word-break:break-word;}
-      .fa-msg.user{margin-left:auto;background:rgba(124,139,255,.16);border-color:rgba(124,139,255,.32);}
-      .fa-msg.assistant{background:rgba(255,255,255,.04);}
+      .fa-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));color:#e7ecff;}
+      .fa-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;}
+      .fa-logo{width:24px;height:24px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(108,124,255,.2));}
+      .fa-actions{display:flex;align-items:center;gap:10px;color:#a7b0d6;font-size:11px;}
+      .fa-x{background:transparent;border:0;color:#e7ecff;opacity:.8;font-size:22px;line-height:1;padding:6px 8px;border-radius:10px;cursor:pointer;transition:all .15s;}
+      .fa-x:hover{opacity:1;background:rgba(255,255,255,.04);}
+      .fa-body{padding:14px;color:#e7ecff;overflow:auto;overscroll-behavior:contain;line-height:1.6;}
+      .fa-body::-webkit-scrollbar{width:8px;}
+      .fa-body::-webkit-scrollbar-track{background:transparent;}
+      .fa-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:8px;border:2px solid transparent;background-clip:padding-box;}
+      .fa-body::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.12);}
+      .fa-msg{max-width:100%;padding:10px 12px;border-radius:12px;margin:6px 0;line-height:1.6;font-size:14px;overflow:hidden;word-wrap:break-word;overflow-wrap:break-word;}
+      .fa-msg.user{margin-left:auto;background:rgba(124,139,255,.12);border:1px solid rgba(124,139,255,.18);color:#e7ecff;}
+      .fa-msg.assistant{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,0.05);color:#e7ecff;}
+      .fa-msg.assistant h1,.fa-msg.assistant h2,.fa-msg.assistant h3{margin:12px 0 8px;color:#7ee7ff;font-weight:700;}
+      .fa-msg.assistant h1{font-size:18px;}
+      .fa-msg.assistant h2{font-size:16px;}
+      .fa-msg.assistant h3{font-size:14px;}
+      .fa-msg.assistant p{margin:8px 0;word-wrap:break-word;overflow-wrap:break-word;}
+      .fa-msg.assistant ul,.fa-msg.assistant ol{margin:8px 0;padding-left:20px;overflow:hidden;}
+      .fa-msg.assistant li{margin:4px 0;word-wrap:break-word;overflow-wrap:break-word;}
+      .fa-msg.assistant code{background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px;font-family:ui-monospace,monospace;font-size:13px;color:#9ecbff;word-wrap:break-word;overflow-wrap:break-word;max-width:100%;display:inline-block;}
+      .fa-msg.assistant pre{background:rgba(6,10,22,.6);border:1px solid rgba(255,255,255,.05);padding:12px;border-radius:8px;overflow-x:auto;margin:12px 0;}
+      .fa-msg.assistant pre code{background:transparent;padding:0;color:#c3f0ff;}
+      .fa-msg.assistant strong{color:#6c7cff;font-weight:600;word-wrap:break-word;overflow-wrap:break-word;}
+      .fa-msg.assistant a{color:#7ee7ff;text-decoration:underline;}
       .fa-err{color:#ffb4b4;font-size:13px;margin:6px 2px 0;}
-      .fa-foot{padding:10px;border-top:1px solid var(--fa-brd);background:linear-gradient(0deg,rgba(255,255,255,.04),rgba(255,255,255,0));display:grid;gap:8px;}
-      .fa-input{display:flex;align-items:center;gap:8px;border:1px solid var(--fa-brd);background:rgba(255,255,255,.06);border-radius:12px;padding:8px;}
-      .fa-input textarea{all:unset;color:var(--fa-text);font:inherit;min-height:22px;max-height:120px;overflow:auto;width:100%;}
-      .fa-btn{background:linear-gradient(135deg,var(--fa-brand),var(--fa-brand2));color:#0a0f24;border:0;border-radius:10px;padding:8px 14px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(108,124,255,.30);}
-      .fa-btn[disabled]{opacity:.6;cursor:not-allowed;box-shadow:none;}
-      .fa-hint{color:var(--fa-muted);font-size:12px;margin:0 2px;}
+      .fa-foot{padding:10px 14px;border-top:1px solid rgba(255,255,255,.05);background:linear-gradient(0deg,rgba(255,255,255,.02),rgba(255,255,255,0));display:grid;gap:8px;}
+      .fa-input{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,.04);border-radius:12px;padding:10px 12px;transition:all .2s;}
+      .fa-input:focus-within{border-color:rgba(126,231,255,.20);box-shadow:0 0 0 3px rgba(124,139,255,0.15);}
+      .fa-input textarea{all:unset;color:#e7ecff;font:inherit;font-size:14px;line-height:1.5;min-height:22px;max-height:120px;overflow:auto;width:100%;resize:none;}
+      .fa-input textarea::placeholder{color:#a7b0d6;opacity:.7;}
+      .fa-btn{background:transparent;border:0;color:#7ee7ff;padding:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;opacity:.85;border-radius:8px;}
+      .fa-btn:hover:not([disabled]){opacity:1;background:rgba(126,231,255,.08);}
+      .fa-btn:active:not([disabled]){transform:scale(.95);}
+      .fa-btn[disabled]{opacity:.4;cursor:not-allowed;}
+      .fa-hint{color:#a7b0d6;font-size:11px;margin:0;text-align:center;opacity:.8;}
+      .fa-icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
     `;
     document.head.appendChild(el);
   }, []);
@@ -239,10 +253,37 @@ export default function FloatingAIAssistant({
     return "Model: —";
   }, [resolvedModel, supportsStream, resolving]);
 
+  function formatMessage(text) {
+    if (!text) return text;
+
+    let html = text;
+
+    html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    html = html.replace(/^\* (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+    html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/\n\n/g, '</p><p>');
+
+    if (!html.startsWith('<')) {
+      html = '<p>' + html + '</p>';
+    }
+
+    return html;
+  }
+
   return (
     <>
       {!open && (
-        <button className="fa-fab" onClick={() => setOpen(true)} title="Assistant">AI</button>
+        <button className="fa-fab" onClick={() => setOpen(true)} title="AI Assistant">
+          <img src="/1fa-logo.png" alt="AI" />
+        </button>
       )}
 
       {open && (
@@ -251,8 +292,8 @@ export default function FloatingAIAssistant({
           <section className="fa-panel" role="dialog" aria-label="AI Assistant">
             <header className="fa-head">
               <div className="fa-title">
-                <span className="fa-badge">AI</span>
-                Assistant
+                <img src="/1fa-logo.png" alt="" className="fa-logo" />
+                AI Assistant
               </div>
               <div className="fa-actions">
                 <span>{headerRight}</span>
@@ -263,11 +304,15 @@ export default function FloatingAIAssistant({
             <div className="fa-body" ref={scrollerRef}>
               {history.map((m, i) => (
                 <div key={i} className={`fa-msg ${m.role === "user" ? "user" : "assistant"}`}>
-                  {m.content}
+                  {m.role === "assistant" ? (
+                    <div dangerouslySetInnerHTML={{ __html: formatMessage(m.content) }} />
+                  ) : (
+                    m.content
+                  )}
                 </div>
               ))}
               {error && <div className="fa-err">⚠ {error}</div>}
-              {busy && <div className="fa-msg assistant">…</div>}
+              {busy && <div className="fa-msg assistant">Thinking...</div>}
             </div>
 
             <footer className="fa-foot">
@@ -281,11 +326,13 @@ export default function FloatingAIAssistant({
                   disabled={busy}
                 />
                 <button className="fa-btn" onClick={onSend} disabled={busy || !input.trim() || resolving}>
-                  {busy ? "Sending…" : "Send"}
+                  <svg className="fa-icon" viewBox="0 0 24 24">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                  </svg>
                 </button>
               </div>
               <div className="fa-hint">
-                {apiKey ? "Free model(s) will be used automatically" : "No API key detected"}
+                {apiKey ? "Press Enter to send • Shift+Enter for new line" : "No API key detected"}
               </div>
             </footer>
           </section>
