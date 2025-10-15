@@ -199,6 +199,7 @@ export default function ImagePage() {
   };
   
   const upload = () => {
+    if (!connected) return alert("Please connect your wallet first");
     if (!imagePreview) return alert("Please select an image");
     if (!message.trim()) return alert("Please add a message");
     const next = counter + 1;
