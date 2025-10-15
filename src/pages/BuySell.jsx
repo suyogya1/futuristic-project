@@ -1,73 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { fetchItems, createItem } from "../api/items";
 // src/pages/BuySell.jsx
+import React from "react";
 import ConnectWallet from "../components/ConnectWallet.jsx";
 import BuySellUI from "../sections/BuySellUI";
 import DexScreenerChart from "../components/DexScreenerChart.jsx";
 
-const BuySell = () => {
-  const [items, setItems] = useState([]);
-  const [newItemName, setNewItemName] = useState("");
-  const [newItemImage, setNewItemImage] = useState(null);
-
-  // Fetch all items when the component loads
-  useEffect(() => {
-    fetchItems()
-      .then(setItems)
-      .catch(console.error);
-  }, []);
-
-  // Handle form submission for new item
-  const handleAddItem = async (e) => {
-    e.preventDefault();
-    if (!newItemName || !newItemImage) return;
-
-    try {
-      const savedItem = await createItem(newItemName, newItemImage);
-      setItems((prev) => [...prev, savedItem]);
-      setNewItemName("");
-      setNewItemImage(null);
-    } catch (err) {
-      console.error("Error adding item:", err);
-    }
-  };
-
-  // Handle image file selection
-  const handleImageChange = (e) => {
-    setNewItemImage(e.target.files[0]);
-  };
+export default function BuySell() {
+  // TODO: change to your real pair when ready (e.g., "solana/<pairAddress>")
+  const pairPath = "ethereum/0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc";
 
   return (
-    <div>
-      <h2>Buy/Sell Items</h2>
+    <main>
+      <section className="section" style={{ paddingTop: 32 }}>
+        <div className="container">
+          <h1 className="section-title" style={{ marginBottom: 8 }}>
+            Buy / Sell 1FA
+          </h1>
+          <p className="section-sub" style={{ marginBottom: 20 }}>
+            View the live market, connect your wallet, and try the interface. (Swaps are mocked for now.)
+          </p>
 
-      <form onSubmit={handleAddItem}>
-        <input
-          type="text"
-          value={newItemName}
-          onChange={(e) => setNewItemName(e.target.value)}
-          placeholder="Enter item name"
-        />
-        <input type="file" onChange={handleImageChange} />
-        <button type="submit">Add Item</button>
-      </form>
+          {/* 1) Live chart FIRST */}
+          <div style={{ marginTop: 8 }}>
+            <h3 className="section-title" style={{ fontSize: 18, marginBottom: 8 }}>
+              Live Chart
+            </h3>
+            <DexScreenerChart pairPath={pairPath} theme="dark" height={560} />
+          </div>
 
-      <ul>
-        {items.map((item) => (
-          <li key={item._id}>
-            {item.name}{" "}
-            {item.image && (
-              <img
-                src={`http://localhost:5001/uploads/${item.image}`}
-                alt={item.name}
-                style={{ width: "100px", height: "100px" }}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+          {/* 2) Connect wallet SECOND */}
+          <div style={{ marginTop: 24 }}>
+            <ConnectWallet />
+          </div>
+
+          {/* 3) Buy/Sell interface LAST */}
+          <div style={{ marginTop: 20 }}>
+            <BuySellUI tokenSymbol="1FA" tokenName="1 For All" tokenPriceUsd={0.1234} />
+          </div>
+        </div>
+        
+      </section>
+    </main>
   );
-};
-
-export default BuySell;
+}
