@@ -380,7 +380,7 @@ export default function Landing() {
             gap: 24,
             marginTop: 48
           }}>
-            <Reveal as="div" className="panel" y={20} style={{
+            <Reveal as="div" className="panel" direction="left" distance={80} scale={0.92} rotate={-3} blur={12} duration={1} style={{
               padding: 28,
               background: 'linear-gradient(135deg, rgba(108,124,255,0.06), rgba(126,231,255,0.04))',
               borderColor: 'rgba(108,124,255,0.2)',
@@ -403,7 +403,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={20} delay={100} style={{
+            <Reveal as="div" className="panel" direction="up" distance={70} scale={0.88} blur={15} duration={1.1} delay={100} style={{
               padding: 28,
               background: 'linear-gradient(135deg, rgba(126,231,255,0.06), rgba(108,124,255,0.04))',
               borderColor: 'rgba(126,231,255,0.2)',
@@ -426,7 +426,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={20} delay={200} style={{
+            <Reveal as="div" className="panel" direction="right" distance={80} scale={0.92} rotate={3} blur={12} duration={1} delay={200} style={{
               padding: 28,
               background: 'linear-gradient(135deg, rgba(126,231,255,0.04), rgba(108,124,255,0.06))',
               borderColor: 'rgba(108,124,255,0.2)',
@@ -459,17 +459,17 @@ export default function Landing() {
       }}>
         <div className="container">
           <div className="grid3" style={{ display: "grid", gap: 24, gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))" }}>
-            <Reveal as="div" className="panel" y={20} style={{ padding: 28 }}>
+            <Reveal as="div" className="panel" direction="left" distance={90} scale={0.9} rotate={-2} blur={10} duration={1.05} style={{ padding: 28 }}>
               <div style={{ fontSize: 36, marginBottom: 12 }}>🚀</div>
               <h3 style={{ marginTop: 0, fontSize: 22, fontWeight: 800 }}>Fast & Low Cost</h3>
               <p className="hint" style={{ lineHeight: 1.6 }}>Solana finality in seconds and fees that round to zero. Experience the speed of light.</p>
             </Reveal>
-            <Reveal as="div" className="panel" y={20} delay={80} style={{ padding: 28 }}>
+            <Reveal as="div" className="panel" direction="up" distance={80} scale={0.85} blur={14} duration={1.15} delay={80} style={{ padding: 28 }}>
               <div style={{ fontSize: 36, marginBottom: 12 }}>🔗</div>
               <h3 style={{ marginTop: 0, fontSize: 22, fontWeight: 800 }}>Composability</h3>
               <p className="hint" style={{ lineHeight: 1.6 }}>Seamlessly integrates with leading DEXs, aggregators, and wallets across the ecosystem.</p>
             </Reveal>
-            <Reveal as="div" className="panel" y={20} delay={160} style={{ padding: 28 }}>
+            <Reveal as="div" className="panel" direction="right" distance={90} scale={0.9} rotate={2} blur={10} duration={1.05} delay={160} style={{ padding: 28 }}>
               <div style={{ fontSize: 36, marginBottom: 12 }}>💎</div>
               <h3 style={{ marginTop: 0, fontSize: 22, fontWeight: 800 }}>Community First</h3>
               <p className="hint" style={{ lineHeight: 1.6 }}>Transparent updates, governance participation, and rewards for dedicated holders.</p>
@@ -490,7 +490,7 @@ export default function Landing() {
           </Reveal>
 
           <div style={{ display: "grid", gap: 20, marginTop: 40 }}>
-            <Reveal as="div" className="panel" y={26} style={{
+            <Reveal as="div" className="panel" direction="left" distance={100} scale={0.88} rotate={-4} blur={14} duration={1.2} style={{
               padding: 32,
               background: 'linear-gradient(135deg, rgba(108,124,255,0.08), rgba(126,231,255,0.04))',
               borderColor: 'rgba(108,124,255,0.15)'
@@ -512,7 +512,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={-28} delay={80} style={{
+            <Reveal as="div" className="panel" direction="right" distance={100} scale={0.88} rotate={4} blur={14} duration={1.2} delay={100} style={{
               padding: 32,
               background: 'linear-gradient(135deg, rgba(126,231,255,0.08), rgba(108,124,255,0.04))',
               borderColor: 'rgba(126,231,255,0.15)'
@@ -534,7 +534,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={30} delay={140} style={{
+            <Reveal as="div" className="panel" direction="left" distance={100} scale={0.88} rotate={-4} blur={14} duration={1.2} delay={200} style={{
               padding: 32,
               background: 'linear-gradient(135deg, rgba(108,124,255,0.04), rgba(126,231,255,0.08))',
               borderColor: 'rgba(108,124,255,0.15)'
@@ -574,7 +574,7 @@ export default function Landing() {
             className="grid3"
             style={{ display: "grid", gap: 24, gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", marginTop: 40 }}
           >
-            <Reveal as="div" className="panel" y={28} style={{ padding: 32 }}>
+            <Reveal as="div" className="panel" direction="left" distance={85} scale={0.9} rotate={-2} blur={12} duration={1.1} style={{ padding: 32 }}>
               <div style={{ fontSize: 36, marginBottom: 16 }}>💰</div>
               <div className="row between" style={{ marginBottom: 12 }}>
                 <div className="label" style={{ fontSize: 16, fontWeight: 700 }}>Total Supply</div>
@@ -585,7 +585,7 @@ export default function Landing() {
               <p className="hint" style={{ margin: '8px 0 0', fontSize: 14 }}>1FA tokens in circulation</p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={-28} delay={80} style={{ padding: 32 }}>
+            <Reveal as="div" className="panel" direction="up" distance={75} scale={0.87} blur={14} duration={1.15} delay={90} style={{ padding: 32 }}>
               <div style={{ fontSize: 36, marginBottom: 16 }}>💸</div>
               <div className="row between" style={{ marginBottom: 12 }}>
                 <div className="label" style={{ fontSize: 16, fontWeight: 700 }}>Trading Fees</div>
@@ -596,7 +596,7 @@ export default function Landing() {
               <p className="hint" style={{ margin: '8px 0 0', fontSize: 14 }}>No buy or sell tax</p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={30} delay={140} style={{ padding: 32 }}>
+            <Reveal as="div" className="panel" direction="right" distance={85} scale={0.9} rotate={2} blur={12} duration={1.1} delay={180} style={{ padding: 32 }}>
               <div style={{ fontSize: 36, marginBottom: 16 }}>🔒</div>
               <div className="row between" style={{ marginBottom: 12 }}>
                 <div className="label" style={{ fontSize: 16, fontWeight: 700 }}>Liquidity</div>
@@ -625,7 +625,7 @@ export default function Landing() {
             className="grid3"
             style={{ display: "grid", gap: 24, gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", marginTop: 48 }}
           >
-            <Reveal as="div" className="panel" y={24} style={{
+            <Reveal as="div" className="panel" direction="left" distance={90} scale={0.88} rotate={-3} blur={13} duration={1.15} style={{
               padding: 32,
               background: 'linear-gradient(135deg, rgba(108,124,255,0.08), transparent)',
               borderColor: 'rgba(108,124,255,0.2)'
@@ -649,7 +649,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={-26} delay={80} style={{
+            <Reveal as="div" className="panel" direction="up" distance={75} scale={0.85} blur={15} duration={1.2} delay={100} style={{
               padding: 32,
               background: 'linear-gradient(135deg, rgba(126,231,255,0.08), transparent)',
               borderColor: 'rgba(126,231,255,0.2)'
@@ -673,7 +673,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={28} delay={140} style={{
+            <Reveal as="div" className="panel" direction="right" distance={90} scale={0.88} rotate={3} blur={13} duration={1.15} delay={200} style={{
               padding: 32,
               background: 'linear-gradient(135deg, rgba(108,124,255,0.08), transparent)',
               borderColor: 'rgba(108,124,255,0.2)'
@@ -716,7 +716,7 @@ export default function Landing() {
           </Reveal>
 
           <div style={{ marginTop: 32 }}>
-            <Reveal as="div" className="panel" y={22} style={{
+            <Reveal as="div" className="panel" direction="left" distance={95} scale={0.86} rotate={-4} blur={16} duration={1.25} style={{
               padding: 28,
               marginBottom: 20,
               background: 'linear-gradient(135deg, rgba(108,124,255,0.04), rgba(126,231,255,0.02))',
@@ -737,7 +737,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={-24} delay={80} style={{
+            <Reveal as="div" className="panel" direction="right" distance={95} scale={0.86} rotate={4} blur={16} duration={1.25} delay={110} style={{
               padding: 28,
               marginBottom: 20,
               background: 'linear-gradient(135deg, rgba(126,231,255,0.04), rgba(108,124,255,0.02))',
@@ -758,7 +758,7 @@ export default function Landing() {
               </p>
             </Reveal>
 
-            <Reveal as="div" className="panel" y={26} delay={140} style={{
+            <Reveal as="div" className="panel" direction="left" distance={95} scale={0.86} rotate={-4} blur={16} duration={1.25} delay={220} style={{
               padding: 28,
               background: 'linear-gradient(135deg, rgba(108,124,255,0.02), rgba(126,231,255,0.04))',
               borderColor: 'rgba(108,124,255,0.12)'
