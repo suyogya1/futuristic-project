@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 /** ---------- 3D Card Dimensions (keep in sync with CSS) ---------- */
 const THICK = 20;
@@ -129,6 +131,7 @@ const readFileAsDataURL = (file) =>
 
 /** ---------- Component ---------- */
 export default function ImagePage() {
+  const { connected } = useWallet();
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [message, setMessage] = useState("");
@@ -248,6 +251,76 @@ export default function ImagePage() {
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return `${Math.round((bytes / Math.pow(1024, i)) * 100) / 100} ${sizes[i]}`;
   };
+
+  if (!connected) {
+    return (
+      <div style={layout.page}>
+        <main style={layout.main}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '70vh',
+            textAlign: 'center',
+            padding: '40px 20px'
+          }}>
+            <div style={{
+              maxWidth: '600px',
+              background: 'rgba(30, 41, 59, 0.5)',
+              border: '1px solid rgba(148, 163, 184, 0.2)',
+              borderRadius: '24px',
+              padding: '48px 32px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <div style={{
+                fontSize: '64px',
+                marginBottom: '24px'
+              }}>🔒</div>
+              <h1 style={{
+                fontSize: '2rem',
+                fontWeight: '900',
+                marginBottom: '16px',
+                background: 'linear-gradient(135deg, #facc15, #d97706)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent'
+              }}>Connect Your Wallet</h1>
+              <p style={{
+                fontSize: '1.1rem',
+                color: '#94a3b8',
+                marginBottom: '32px',
+                lineHeight: '1.6'
+              }}>
+                To access the Meme Battle arena and create epic meme cards, you need to connect your Phantom wallet first.
+              </p>
+              <WalletMultiButton style={{
+                fontSize: '1rem',
+                padding: '14px 32px'
+              }} />
+              <p style={{
+                fontSize: '0.9rem',
+                color: '#64748b',
+                marginTop: '24px'
+              }}>
+                Don't have Phantom? <a
+                  href="https://phantom.app/download"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    color: '#60a5fa',
+                    textDecoration: 'underline'
+                  }}
+                >
+                  Download it here
+                </a>
+              </p>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div style={layout.page}>
