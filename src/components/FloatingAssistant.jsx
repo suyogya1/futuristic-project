@@ -61,11 +61,7 @@ export default function FloatingAIAssistant({
       .fa-body::-webkit-scrollbar-track{background:transparent;}
       .fa-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:8px;border:2px solid transparent;background-clip:padding-box;}
       .fa-body::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.12);}
-<<<<<<< HEAD
       .fa-msg{max-width:100%;padding:10px 12px;border-radius:12px;margin:6px 0;line-height:1.6;font-size:14px;overflow:hidden;word-wrap:break-word;overflow-wrap:break-word;}
-=======
-      .fa-msg{max-width:85%;padding:10px 12px;border-radius:12px;margin:6px 0;line-height:1.6;font-size:14px;overflow:hidden;word-wrap:break-word;overflow-wrap:break-word;}
->>>>>>> af008e89bb945bf533a37f626952b75a59eff688
       .fa-msg.user{margin-left:auto;background:rgba(124,139,255,.12);border:1px solid rgba(124,139,255,.18);color:#e7ecff;}
       .fa-msg.assistant{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,0.05);color:#e7ecff;}
       .fa-msg.assistant h1,.fa-msg.assistant h2,.fa-msg.assistant h3{margin:12px 0 8px;color:#7ee7ff;font-weight:700;}

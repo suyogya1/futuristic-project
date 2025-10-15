@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { fetchItems, createItem } from "../api/items";
-=======
-// src/pages/BuySell.jsx
-import React from "react";
-import ConnectWallet from "../components/ConnectWallet.jsx";
-import BuySellUI from "../sections/BuySellUI";
-import DexScreenerChart from "../components/DexScreenerChart.jsx";
->>>>>>> af008e89bb945bf533a37f626952b75a59eff688
 
 const BuySell = () => {
   const [items, setItems] = useState([]);

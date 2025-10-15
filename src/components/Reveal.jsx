@@ -1,22 +1,20 @@
-import React, { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, useRef } from "react";
 
 /** Fade & slide in when scrolled into view */
-const Reveal = forwardRef(({
+export default function Reveal({
   children,
   as: Tag = "div",
-  delay = 0,
-  y = 16,
+  delay = 0,    // ms
+  y = 16,       // px translateY-from
   once = true,
   threshold = 0.18,
   className = "",
   ...rest
-}, forwardedRef) => {
-  const innerRef = useRef(null);
-
-  useImperativeHandle(forwardedRef, () => innerRef.current);
+}) {
+  const ref = useRef(null);
 
   useEffect(() => {
-    const el = innerRef.current;
+    const el = ref.current;
     if (!el) return;
     el.style.setProperty("--reveal-delay", `${delay}ms`);
     el.style.setProperty("--reveal-y", `${y}px`);
@@ -38,12 +36,8 @@ const Reveal = forwardRef(({
   }, [delay, y, once, threshold]);
 
   return (
-    <Tag ref={innerRef} className={`reveal ${className}`} {...rest}>
+    <Tag ref={ref} className={`reveal ${className}`} {...rest}>
       {children}
     </Tag>
   );
-});
-
-Reveal.displayName = "Reveal";
-
-export default Reveal;
+}
