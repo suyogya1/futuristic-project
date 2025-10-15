@@ -1,10 +1,12 @@
 // src/pages/BuySell.jsx
 import React from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import ConnectWallet from "../components/ConnectWallet.jsx";
 import BuySellUI from "../sections/BuySellUI";
 import DexScreenerChart from "../components/DexScreenerChart.jsx";
 
 export default function BuySell() {
+  const { connected, publicKey } = useWallet();
   // TODO: change to your real pair when ready (e.g., "solana/<pairAddress>")
   const pairPath = "ethereum/0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc";
 
@@ -34,10 +36,16 @@ export default function BuySell() {
 
           {/* 3) Buy/Sell interface LAST */}
           <div style={{ marginTop: 20 }}>
-            <BuySellUI tokenSymbol="1FA" tokenName="1 For All" tokenPriceUsd={0.1234} />
+            <BuySellUI
+              tokenSymbol="1FA"
+              tokenName="1 For All"
+              tokenPriceUsd={0.1234}
+              connected={connected}
+              walletAddress={publicKey?.toBase58()}
+            />
           </div>
         </div>
-        
+
       </section>
     </main>
   );
