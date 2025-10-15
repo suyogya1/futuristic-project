@@ -2,6 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import DexScreenerChart from "../components/DexScreenerChart.jsx";
+import ConnectWallet from "../components/ConnectWallet.jsx";
 
 export default function BuySell() {
   const navigate = useNavigate();
@@ -21,6 +22,11 @@ export default function BuySell() {
           <p className="section-sub" style={{ marginBottom: 20 }}>
             View the live market and explore our platform
           </p>
+
+          {/* Wallet Connection */}
+          <div style={{ marginTop: 24, marginBottom: 32 }}>
+            <ConnectWallet />
+          </div>
 
           {/* Live chart */}
           <div style={{ marginTop: 8 }}>
