@@ -4,8 +4,11 @@ import React, { useEffect, useRef } from "react";
 export default function Reveal({
   children,
   as: Tag = "div",
-  delay = 0,    // ms
-  y = 16,       // px translateY-from
+  delay = 0,
+  y = 0,
+  x = 0,
+  direction = null,
+  distance = 40,
   once = true,
   threshold = 0.18,
   className = "",
@@ -16,8 +19,27 @@ export default function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    let translateX = x;
+    let translateY = y;
+
+    if (direction === "left") {
+      translateX = -distance;
+      translateY = 0;
+    } else if (direction === "right") {
+      translateX = distance;
+      translateY = 0;
+    } else if (direction === "up") {
+      translateX = 0;
+      translateY = -distance;
+    } else if (direction === "down") {
+      translateX = 0;
+      translateY = distance;
+    }
+
     el.style.setProperty("--reveal-delay", `${delay}ms`);
-    el.style.setProperty("--reveal-y", `${y}px`);
+    el.style.setProperty("--reveal-y", `${translateY}px`);
+    el.style.setProperty("--reveal-x", `${translateX}px`);
 
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -33,7 +55,7 @@ export default function Reveal({
 
     io.observe(el);
     return () => io.disconnect();
-  }, [delay, y, once, threshold]);
+  }, [delay, y, x, direction, distance, once, threshold]);
 
   return (
     <Tag ref={ref} className={`reveal ${className}`} {...rest}>
