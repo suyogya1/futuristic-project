@@ -7,8 +7,6 @@ export default function BuySellUI({
   tokenSymbol = "1FA",
   tokenName = "One For All",
   tokenPriceUsd = 0.1234,
-  connected = false,
-  walletAddress = null,
 }) {
   const [side, setSide] = useState("buy");
   const [amount, setAmount] = useState("");
@@ -38,11 +36,7 @@ export default function BuySellUI({
           </div>
         </div>
 
-        <p className="section-sub">
-          {connected
-            ? `Connected: ${walletAddress?.slice(0, 4)}...${walletAddress?.slice(-4)}`
-            : "Connect your wallet above to enable trading"}
-        </p>
+        <p className="section-sub">Interface only. We’ll wire wallet + swaps later.</p>
 
         <div className="swap-grid">
           <div className="panel">
@@ -96,15 +90,18 @@ export default function BuySellUI({
             </div>
 
             <button
-              className={`btn primary lg${!canSubmit || !connected ? " is-disabled" : ""}`}
+              className={`btn primary lg${!canSubmit ? " is-disabled" : ""}`}
               style={{ width: "100%", marginTop: 14 }}
               onClick={() => {
-                if (!canSubmit || !connected) return;
-                alert(`[UI only] ${btnLabel} clicked for ${qty} ${tokenSymbol} at $${price}`);
+                if (!canSubmit) return;
+                startMoneyRain({ count: 56, durationMs: 3000 });
+                setTimeout(() => {
+                  alert(`[UI only] ${btnLabel} clicked for ${qty} ${tokenSymbol} at $${price}`);
+                }, 150);
               }}
-              disabled={!canSubmit || !connected}
+              disabled={!canSubmit}
             >
-              {!connected ? "Connect Wallet to Trade" : btnLabel}
+              {btnLabel}
             </button>
 
             <button className="btn ghost" style={{ width: "100%", marginTop: 8 }} onClick={() => console.log("Preview route (TODO)")} type="button">

@@ -1,25 +1,53 @@
-import React, { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, useRef } from "react";
 
 /** Fade & slide in when scrolled into view */
-const Reveal = forwardRef(({
+export default function Reveal({
   children,
   as: Tag = "div",
   delay = 0,
-  y = 16,
+  y = 0,
+  x = 0,
+  direction = null,
+  distance = 40,
+  scale = 0.95,
+  rotate = 0,
+  blur = 8,
+  duration = 0.9,
   once = true,
   threshold = 0.18,
   className = "",
   ...rest
-}, forwardedRef) => {
-  const innerRef = useRef(null);
-
-  useImperativeHandle(forwardedRef, () => innerRef.current);
+}) {
+  const ref = useRef(null);
 
   useEffect(() => {
-    const el = innerRef.current;
+    const el = ref.current;
     if (!el) return;
+
+    let translateX = x;
+    let translateY = y;
+
+    if (direction === "left") {
+      translateX = -distance;
+      translateY = 0;
+    } else if (direction === "right") {
+      translateX = distance;
+      translateY = 0;
+    } else if (direction === "up") {
+      translateX = 0;
+      translateY = -distance;
+    } else if (direction === "down") {
+      translateX = 0;
+      translateY = distance;
+    }
+
     el.style.setProperty("--reveal-delay", `${delay}ms`);
-    el.style.setProperty("--reveal-y", `${y}px`);
+    el.style.setProperty("--reveal-y", `${translateY}px`);
+    el.style.setProperty("--reveal-x", `${translateX}px`);
+    el.style.setProperty("--reveal-scale", scale);
+    el.style.setProperty("--reveal-rotate", `${rotate}deg`);
+    el.style.setProperty("--reveal-blur", `${blur}px`);
+    el.style.setProperty("--reveal-duration", `${duration}s`);
 
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -35,15 +63,11 @@ const Reveal = forwardRef(({
 
     io.observe(el);
     return () => io.disconnect();
-  }, [delay, y, once, threshold]);
+  }, [delay, y, x, direction, distance, scale, rotate, blur, duration, once, threshold]);
 
   return (
-    <Tag ref={innerRef} className={`reveal ${className}`} {...rest}>
+    <Tag ref={ref} className={`reveal ${className}`} {...rest}>
       {children}
     </Tag>
   );
-});
-
-Reveal.displayName = "Reveal";
-
-export default Reveal;
+}
