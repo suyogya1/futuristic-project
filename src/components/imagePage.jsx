@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Galaxy from "./galaxy";
 
 /** ---------- 3D Card Dimensions (keep in sync with CSS) ---------- */
 const THICK = 20;
@@ -11,7 +12,7 @@ const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 /** ---------- Inline styles for layout (prevents container overlap) ---------- */
 const layout = {
-  page: { minHeight: "100vh", background: "rgb(12,19,35)", paddingBottom: 48 },
+  page: { minHeight: "100vh", background: "transparent", paddingBottom: 48 },
   main: { maxWidth: 1240, margin: "0 auto", padding: "24px 16px" },
 };
 
@@ -20,7 +21,7 @@ const globalCSS = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
   :root { --w:${W}px; --h:${H}px; --t:${THICK}px; }
   *{box-sizing:border-box}
-  body{font-family:Inter, ui-sans-serif, system-ui; color:#e5e7eb; background:#07090e}
+  body{font-family:Inter, ui-sans-serif, system-ui; color:#e5e7eb; background:#07090e; overflow-x: hidden;}
 
   /* Header (optional space) */
   .page-header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px}
@@ -338,6 +339,12 @@ const globalCSS = `
   .preview-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); z-index: 200; display: flex; align-items: center; justify-content: center; cursor: zoom-out; }
   .preview-image-large { display: block; max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75); }
   .preview-close-text { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); color: rgba(255, 255, 255, 0.7); background: rgba(0, 0, 0, 0.4); padding: 8px 16px; border-radius: 99px; font-size: 0.9rem; user-select: none; }
+
+  .galaxy-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
 `;
 
 /** ---------- Utils ---------- */
@@ -360,8 +367,9 @@ export default function ImagePage() {
   const fileInputRef = useRef(null);
   const [isUploaderOpen, setIsUploaderOpen] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState(null);
+  const mouseDataRef = useRef({ x: 0.5, y: 0.5, active: 0.0 });
 
-  // ... (All logic hooks and functions are unchanged) ...
+  // Inject global CSS
   useEffect(() => {
     const tag = document.createElement("style");
     tag.textContent = globalCSS;
@@ -369,6 +377,7 @@ export default function ImagePage() {
     return () => document.head.removeChild(tag);
   }, []);
 
+  // Load cards from localStorage
   useEffect(() => {
     try {
       const savedData = JSON.parse(localStorage.getItem("meme_cards") || "[]");
@@ -382,7 +391,8 @@ export default function ImagePage() {
       localStorage.removeItem("meme_cards");
     }
   }, []);
-  
+
+  // Save cards to localStorage
   useEffect(() => {
     try {
       localStorage.setItem("meme_cards", JSON.stringify(cards));
@@ -392,6 +402,7 @@ export default function ImagePage() {
     }
   }, [cards]);
 
+  // Save counter to localStorage
   useEffect(() => {
     try {
       localStorage.setItem("meme_counter", String(counter));
@@ -400,6 +411,7 @@ export default function ImagePage() {
     }
   }, [counter]);
 
+  // File change handler
   const onFileChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -412,12 +424,14 @@ export default function ImagePage() {
     setImagePreview(dataUrl);
   };
 
+  // Remove selected file
   const removeSelected = () => {
     setImageFile(null);
     setImagePreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
-  
+
+  // Upload function
   const upload = () => {
     if (!imagePreview) return alert("Please select an image");
     if (!message.trim()) return alert("Please add a message");
@@ -444,12 +458,14 @@ export default function ImagePage() {
     setTimeout(() => toast.remove(), 1800);
   };
 
+  // Voted set
   const votedSet = useMemo(() => {
     try {
       return new Set(JSON.parse(localStorage.getItem("meme_votes") || "[]"));
     } catch { return new Set(); }
   }, [cards.length]);
 
+  // Save votes
   const saveVotes = (set) => {
     try {
       localStorage.setItem("meme_votes", JSON.stringify(Array.from(set)));
@@ -458,13 +474,15 @@ export default function ImagePage() {
     }
   };
 
+  // Vote function
   const vote = (id) => {
     if (votedSet.has(id)) return;
     setCards((prev) => prev.map((c) => (c.id === id ? { ...c, votes: c.votes + 1 } : c)));
     votedSet.add(id);
     saveVotes(votedSet);
   };
-  
+
+  // Format bytes
   const formatBytes = (bytes) => {
     if (!bytes) return "";
     const sizes = ["Bytes", "KB", "MB"];
@@ -474,11 +492,12 @@ export default function ImagePage() {
 
   return (
     <div style={layout.page}>
+      <Galaxy mouseDataRef={mouseDataRef} />
       <main style={layout.main}>
         <div className="page-header">
           <div className="brand">
             <span>One For All · </span>
-            <b>1FA</b>
+            <b>$MEMECOIN</b>
           </div>
         </div>
 
@@ -490,7 +509,6 @@ export default function ImagePage() {
                 <div className="card3d">
                   {/* Front: Image */}
                   <div className="face3d front">
-                    {/** UPDATED: Added frame to placeholder card */}
                     <div className="frameArea" /> 
                     <img
                       className="frontImage"
@@ -520,7 +538,6 @@ export default function ImagePage() {
                 <div className="card3d">
                   {/* Front: User Image */}
                   <div className="face3d front">
-                    {/** UPDATED: Added frame to user card */}
                     <div className="frameArea" />
                     <img src={card.image} className="frontImage" alt={card.token} />
                   </div>
@@ -556,7 +573,7 @@ export default function ImagePage() {
           )}
         </section>
         
-        {/* ... (Rest of the component is unchanged) ... */}
+        {/* ----- UPLOAD TRIGGER ----- */}
         <div className="upload-trigger-area">
           <button className="open-uploader-btn" onClick={() => setIsUploaderOpen(true)}>
             ✨ Create New Meme Card
@@ -564,6 +581,7 @@ export default function ImagePage() {
         </div>
       </main>
 
+      {/* ----- MODAL FOR UPLOADER ----- */}
       {isUploaderOpen && (
         <div className="modal-backdrop" onClick={() => setIsUploaderOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -630,5 +648,5 @@ export default function ImagePage() {
         </div>
       )}
     </div>
-  );  
+  );
 }
