@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+<<<<<<< HEAD
 import Galaxy from "./galaxy";
+=======
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
 
 /** ---------- 3D Card Dimensions (keep in sync with CSS) ---------- */
 const THICK = 20;
@@ -12,7 +17,11 @@ const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 /** ---------- Inline styles for layout (prevents container overlap) ---------- */
 const layout = {
+<<<<<<< HEAD
   page: { minHeight: "100vh", background: "transparent", paddingBottom: 48 },
+=======
+  page: { minHeight: "100vh", background: "#07090e", paddingBottom: 48 },
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
   main: { maxWidth: 1240, margin: "0 auto", padding: "24px 16px" },
 };
 
@@ -50,15 +59,10 @@ const globalCSS = `
   .card3d{
     position:relative; width:var(--w); height:var(--h);
     transform-style:preserve-3d; animation: spinY 8s linear infinite;
-    border-radius:20px;
-    box-shadow: 0 40px 100px rgba(0,0,0,.55);
-    transition: box-shadow 0.4s ease;
+    border-radius:20px; box-shadow:0 40px 100px rgba(0,0,0,.55);
   }
   @keyframes spinY { from{ transform: rotateY(0) } to{ transform: rotateY(360deg) } }
-  .scene:hover .card3d {
-    animation-play-state: paused;
-    box-shadow: 0 40px 100px rgba(0,0,0,.65), 0 0 60px rgba(126,231,255,.25);
-  }
+  .scene:hover .card3d { animation-play-state: paused; }
   .face3d{ position:absolute; inset:0; border-radius:20px; backface-visibility:hidden; overflow:hidden; background:#0b0f15; }
   .front{ transform: translateZ(calc(var(--t)/2)); }
   .back{ transform: rotateY(180deg) translateZ(calc(var(--t)/2)); background: #000; }
@@ -81,237 +85,19 @@ const globalCSS = `
       radial-gradient(120% 80% at 100% 0%, rgba(255,255,255,.06), transparent 60%);
     box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 -18px 38px rgba(0,0,0,.45);
     z-index: 0;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
   }
-  .frameArea::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(126,231,255,0.1), transparent 60deg);
-    animation: rotate-frame 8s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  @keyframes rotate-frame {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  .card3d:hover .frameArea::before {
-    opacity: 1;
-  }
-  .card3d:hover .frameArea {
-    box-shadow: inset 0 0 0 1px rgba(126,231,255,.3), inset 0 -18px 38px rgba(0,0,0,.45), 0 0 25px rgba(126,231,255,.2);
-  }
-  .back-text-content {
-    position: absolute;
-    inset: 10px;
-    z-index: 2;
-    padding: 36px 28px;
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 20px);
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(108,124,255,0.08), rgba(126,231,255,0.04));
-    backdrop-filter: blur(12px);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(108,124,255,0.15);
-    transition: all 0.4s ease;
-  }
-  .back-text-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(126,231,255,0.6), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .card3d:hover .back-text-content {
-    background: linear-gradient(135deg, rgba(108,124,255,0.12), rgba(126,231,255,0.06));
-    border-color: rgba(126,231,255,0.3);
-  }
-  .card3d:hover .back-text-content::before {
-    opacity: 1;
-  }
-  .back-text-content::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(126,231,255,0.6), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .card3d:hover .back-text-content::after {
-    opacity: 1;
-  }
-  .back-token-large {
-    font-size: 14px;
-    font-weight: 900;
-    color: #7ee7ff;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    position: relative;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, rgba(126,231,255,0.12), rgba(108,124,255,0.08));
-    border: 1px solid rgba(126,231,255,0.3);
-    border-radius: 8px;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 15px rgba(126,231,255,0.15);
-  }
-  .back-token-large::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 8px;
-    padding: 2px;
-    background: linear-gradient(135deg, rgba(126,231,255,0.5), rgba(108,124,255,0.3));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .card3d:hover .back-token-large {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(126,231,255,0.3);
-    border-color: rgba(126,231,255,0.5);
-  }
-  .card3d:hover .back-token-large::before {
-    opacity: 1;
-    animation: rotate-glow 3s linear infinite;
-  }
-  @keyframes rotate-glow {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
-  }
-  .back-message-main {
-    font-size: 15px;
-    font-weight: 500;
-    color: #e2e8f0;
-    line-height: 1.7;
-    word-break: break-word;
-    padding: 20px 16px;
-    max-height: 140px;
-    overflow-y: auto;
-    transition: all 0.4s ease;
-    position: relative;
-  }
-  .back-message-main::before {
-    content: '"';
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 48px;
-    color: rgba(126,231,255,0.15);
-    font-family: Georgia, serif;
-    line-height: 1;
-    transition: all 0.4s ease;
-  }
-  .back-message-main::after {
-    content: '"';
-    position: absolute;
-    bottom: -10px;
-    right: 0;
-    font-size: 48px;
-    color: rgba(126,231,255,0.15);
-    font-family: Georgia, serif;
-    line-height: 1;
-    transition: all 0.4s ease;
-  }
-  .card3d:hover .back-message-main {
-    color: #ffffff;
-    transform: scale(1.02);
-  }
-  .card3d:hover .back-message-main::before,
-  .card3d:hover .back-message-main::after {
-    color: rgba(126,231,255,0.3);
-  }
-  .back-message-main::-webkit-scrollbar { width: 3px; }
-  .back-message-main::-webkit-scrollbar-track { background: transparent; }
-  .back-message-main::-webkit-scrollbar-thumb { background: rgba(126,231,255,0.3); border-radius: 3px; }
-  .back-message-main::-webkit-scrollbar-thumb:hover { background: rgba(126,231,255,0.5); }
-
+  .back-text-content { position: relative; z-index: 2; padding: 24px; display: flex; flex-direction: column; height: 100%; align-items: center; text-align: center; }
+  .back-token-large { font-size: 24px; font-weight: 900; color: #facc15; text-shadow: 0 0 12px rgba(250, 204, 21, 0.5); margin-bottom: 16px; }
+  .back-message-main { font-size: 18px; font-weight: 600; color: #e5e7eb; line-height: 1.5; text-shadow: 0 1px 3px rgba(0,0,0,0.7); word-break: break-word; flex-grow: 1; }
   .side{ position:absolute; opacity:.98 }
   .side.left  { width:var(--t); height:var(--h); left:calc(var(--w)/2 - var(--t)/2); top:0; transform: rotateY(90deg) translateZ(calc(var(--w)/2)) }
   .side.right { width:var(--t); height:var(--h); left:calc(var(--w)/2 - var(--t)/2); top:0; transform: rotateY(90deg) translateZ(calc(-1 * var(--w)/2)) }
   .side.top   { width:var(--w); height:var(--t); left:0; top:calc(var(--h)/2 - var(--t)/2); transform: rotateX(90deg) translateZ(calc(var(--h)/2)) }
   .side.bottom{ width:var(--w); height:var(--t); left:0; top:calc(var(--h)/2 - var(--t)/2); transform: rotateX(90deg) translateZ(calc(-1 * var(--h)/2)) }
-  .goldSide{
-    background: linear-gradient(135deg, #7ee7ff 0%, #6c7cff 50%, #5563d1 100%);
-    box-shadow: inset 0 0 4px rgba(255,255,255,.4), 0 0 16px rgba(126,231,255,.3);
-    transition: all 0.3s ease;
-  }
-  .card3d:hover .goldSide {
-    box-shadow: inset 0 0 6px rgba(255,255,255,.5), 0 0 24px rgba(126,231,255,.5);
-  }
-  .voteBtn{
-    padding: 14px 32px;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    background: linear-gradient(135deg, #6c7cff, #7ee7ff) padding-box,
-                linear-gradient(135deg, #6c7cff, #7ee7ff) border-box;
-    color: #0a0f24;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(108,124,255,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    overflow: hidden;
-  }
-  .voteBtn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.4);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-  }
-  .voteBtn:hover::before {
-    width: 300px;
-    height: 300px;
-  }
-  .voteBtn:hover{
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 12px 30px rgba(108,124,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
-    filter: brightness(1.1);
-  }
-  .voteBtn:active{
-    transform: translateY(-2px) scale(1.01);
-  }
-  .voteBtn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    filter: grayscale(0.5);
-  }
-  .voteBtn:disabled:hover {
-    transform: none;
-    box-shadow: 0 6px 20px rgba(108,124,255,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-    filter: brightness(1) grayscale(0.5);
-  }
-  .voteBtn:disabled::before {
-    display: none;
-  }
+  .goldSide{ background:linear-gradient(180deg,#fef08a 0%,#facc15 40%,#f59e0b 70%,#b45309 100%); box-shadow: inset 0 0 4px rgba(255,255,255,.4), 0 0 16px rgba(255,215,0,.25); }
+  .voteBtn{ padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(255,215,0,.42); background: linear-gradient(180deg, #1f2937, #0b1220); color: #ffe08a; font-weight: 800; letter-spacing: .02em; cursor: pointer; box-shadow: 0 4px 20px rgba(255,215,0,.28), inset 0 0 14px rgba(255,215,0,.1); transition: transform .15s ease, box-shadow .2s ease, filter .2s ease; margin-top: auto; flex-shrink: 0; }
+  .voteBtn:hover{ transform: translateY(-2px) scale(1.05); box-shadow: 0 8px 30px rgba(255,215,0,.36), inset 0 0 18px rgba(255,215,0,.14); filter: brightness(1.08);}
+  .voteBtn:active{ transform: translateY(0) scale(.98); }
 
   /* --- Styles for Modals and Uploader --- */
   .upload-trigger-area { position: fixed; bottom: 20px; left: 20px; z-index: 90; }
@@ -359,6 +145,7 @@ const readFileAsDataURL = (file) =>
 
 /** ---------- Component ---------- */
 export default function ImagePage() {
+  const { connected } = useWallet();
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [message, setMessage] = useState("");
@@ -433,6 +220,7 @@ export default function ImagePage() {
 
   // Upload function
   const upload = () => {
+    if (!connected) return alert("Please connect your wallet first");
     if (!imagePreview) return alert("Please select an image");
     if (!message.trim()) return alert("Please add a message");
     const next = counter + 1;
@@ -489,6 +277,76 @@ export default function ImagePage() {
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return `${Math.round((bytes / Math.pow(1024, i)) * 100) / 100} ${sizes[i]}`;
   };
+
+  if (!connected) {
+    return (
+      <div style={layout.page}>
+        <main style={layout.main}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '70vh',
+            textAlign: 'center',
+            padding: '40px 20px'
+          }}>
+            <div style={{
+              maxWidth: '600px',
+              background: 'rgba(30, 41, 59, 0.5)',
+              border: '1px solid rgba(148, 163, 184, 0.2)',
+              borderRadius: '24px',
+              padding: '48px 32px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <div style={{
+                fontSize: '64px',
+                marginBottom: '24px'
+              }}>🔒</div>
+              <h1 style={{
+                fontSize: '2rem',
+                fontWeight: '900',
+                marginBottom: '16px',
+                background: 'linear-gradient(135deg, #facc15, #d97706)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent'
+              }}>Connect Your Wallet</h1>
+              <p style={{
+                fontSize: '1.1rem',
+                color: '#94a3b8',
+                marginBottom: '32px',
+                lineHeight: '1.6'
+              }}>
+                To access the Meme Battle arena and create epic meme cards, you need to connect your Phantom wallet first.
+              </p>
+              <WalletMultiButton style={{
+                fontSize: '1rem',
+                padding: '14px 32px'
+              }} />
+              <p style={{
+                fontSize: '0.9rem',
+                color: '#64748b',
+                marginTop: '24px'
+              }}>
+                Don't have Phantom? <a
+                  href="https://phantom.app/download"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    color: '#60a5fa',
+                    textDecoration: 'underline'
+                  }}
+                >
+                  Download it here
+                </a>
+              </p>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div style={layout.page}>

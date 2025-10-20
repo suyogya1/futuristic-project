@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from "react";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import TargetCursor from "./components/targetCursor.jsx";
 import Galaxy from "./components/galaxy.jsx";
 import Landing from "./pages/Landing.jsx";
 import BuySell from "./pages/BuySell.jsx";
 import Axiom from "./pages/Axiom.jsx";
+<<<<<<< HEAD
 import Rewards from "./pages/rewards.jsx";
 // Assuming ImagePage is now correctly in the 'pages' folder based on previous steps
 import ImagePage from "./components/imagePage.jsx";
@@ -12,6 +17,14 @@ import FloatingAIAssistant from "./components/floatingAssistant.jsx";
 import SendMessagePage from "./components/sendMessagePage.jsx";
 
 // --- ENHANCED LOADING SCREEN ---
+=======
+import Rewards from "./pages/Rewards.jsx";
+import ImagePage from "./components/imagePage.jsx";
+import FloatingAIAssistant from "./components/FloatingAssistant.jsx";
+import SendMessagePage from "./components/sendMessagePage.jsx";
+
+// --- NEW ENHANCED LOADING SCREEN ---
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
 
 const loadingScreenCSS = `
   .loading-screen {
@@ -38,8 +51,13 @@ const loadingScreenCSS = `
     to { opacity: 1; transform: translateY(0); }
   }
   .loading-logo {
+<<<<<<< HEAD
     width: 500px;
     height: 250px;
+=======
+    width: 120px;
+    height: 150px;
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
     margin-bottom: 24px;
     animation: pulse-glow 3.5s ease-in-out infinite;
     filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.4));
@@ -94,7 +112,11 @@ const loadingScreenCSS = `
       flex-direction: column;
       align-items: center;
       gap: 4px;
+<<<<<<< HEAD
       min-width: 200px;
+=======
+      min-width: 200px; /* Prevents layout shift */
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
       text-align: center;
   }
   .progress-text {
@@ -121,19 +143,27 @@ function LoadingScreen({ onLoaded }) {
         if (prev >= 100) {
           clearInterval(interval);
           setTimeout(() => setIsExiting(true), 300);
+<<<<<<< HEAD
           setTimeout(onLoaded, 1100); // Wait for fade out
+=======
+          setTimeout(onLoaded, 1100); // Wait for fade out to complete
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
           return 100;
         }
         return prev + 1;
       });
-    }, 25);
+    }, 25); // Adjust time for faster/slower loading
 
     return () => clearInterval(interval);
   }, [onLoaded]);
 
   return (
     <div className={`loading-screen ${isExiting ? 'exiting' : ''}`}>
+<<<<<<< HEAD
       <img src="/loading-screen.png" alt="Loading Logo" className="loading-logo" /> {/* Ensure path is correct, usually relative to public folder */}
+=======
+      <img src="/public/1fa-logo.png" alt="Loading Logo" className="loading-logo" />
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
       <div className="loading-brand">One For All</div>
       <div className="progress-bar-container">
         <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
@@ -146,7 +176,11 @@ function LoadingScreen({ onLoaded }) {
   );
 }
 
+<<<<<<< HEAD
 // --- Navigation Component ---
+=======
+// --- Your Existing Navigation Component ---
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
 
 function Nav() {
   const [open, setOpen] = useState(false);
@@ -173,10 +207,17 @@ function Nav() {
           <a href="/buy-sell" className="cursor-target" rel="noopener noreferrer"> {/* Added cursor-target */}
             Launch Web App
           </a>
+<<<<<<< HEAD
           <Link to="/meme-battle" className="cursor-target">Meme Battle</Link> {/* Added cursor-target */}
           <Link to="/send-message" className="cursor-target">Send Message</Link> {/* Added cursor-target */}
           {/* <Link to="/axiom" className="cursor-target">Axiom-like</Link>
           <Link to="/rewards" className="cursor-target">Rewards</Link> */}
+=======
+          <Link to="/meme-battle">Meme Battle</Link>
+          <Link to="/send-message">Send Message</Link>
+          {/* <Link to="/axiom">Axiom-like</Link>
+          <Link to="/rewards">Rewards</Link> */}
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
         </nav>
 
         <button
@@ -197,16 +238,20 @@ function Nav() {
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
+<<<<<<< HEAD
   // Global mouse data reference
   const mouseDataRef = useRef({ x: 0.5, y: 0.5, active: 0.0 }); // x: 0-1 (left-right), y: 0-1 (bottom-top for WebGL)
 
   // Inject CSS for loading screen
+=======
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
   useEffect(() => {
     const styleTag = document.createElement("style");
     styleTag.id = "loading-screen-styles";
     if (!document.getElementById(styleTag.id)) {
         styleTag.textContent = loadingScreenCSS;
         document.head.appendChild(styleTag);
+<<<<<<< HEAD
     }
     return () => {
         const styleTagToRemove = document.getElementById(styleTag.id);
@@ -245,6 +290,19 @@ export default function App() {
     };
   }, []); // Run only once on mount
 
+=======
+    }
+    
+    // Your existing background layer logic
+    let bg = document.getElementById("page-bg-layer");
+    if (!bg) {
+      bg = document.createElement("div");
+      bg.id = "page-bg-layer";
+      bg.className = "page-bg";
+      document.body.appendChild(bg);
+    }
+  }, []);
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
 
   if (isLoading) {
     return <LoadingScreen onLoaded={() => setIsLoading(false)} />;
@@ -253,12 +311,25 @@ export default function App() {
   // --- Render Structure ---
   return (
     <>
+<<<<<<< HEAD
       {/* 1. Custom Cursor (Highest z-index, renders on top) */}
       <TargetCursor
         targetSelector="button, a, .cursor-target" // Selects links, buttons, and elements with the class
         hideDefaultCursor={true}
         spinDuration={2}
       />
+=======
+      <Nav />
+      
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/buy-sell" element={<BuySell />} />
+        {/* <Route path="/axiom" element={<Axiom />} />
+        <Route path="/rewards" element={<Rewards />} /> */}
+        <Route path="/meme-battle" element={<ImagePage />} />
+        <Route path="/send-message" element={<SendMessagePage />} />
+      </Routes>
+>>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
 
       {/* 2. Galaxy Background (Fixed position, lowest z-index) */}
       <div style={{
