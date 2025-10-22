@@ -285,16 +285,16 @@ export default function FloatingAIAssistant({
   return (
     <>
       {!open && (
-       <button className="fa-fab cursor-target" onClick={() => setOpen(true)} title="AI Assistant">  
-       <img src="/1fa-logo.png" alt="AI" />
-       </button>
+        <button className="fa-fab" onClick={() => setOpen(true)} title="AI Assistant">
+          <img src="/1fa-logo.png" alt="AI" />
+        </button>
       )}
 
       {open && (
         <>
           <div className="fa-overlay" onClick={() => setOpen(false)} />
-              <section className="fa-panel cursor-target" role="dialog" aria-label="AI Assistant">     
-              <header className="fa-head">
+          <section className="fa-panel" role="dialog" aria-label="AI Assistant">
+            <header className="fa-head">
               <div className="fa-title">
                 <img src="/1fa-logo.png" alt="" className="fa-logo" />
                 AI Assistant

@@ -1,29 +1,23 @@
+/* Layout */
 :root {
-  --bg: #000000;
-  --bg-alt: #0a0f24;
-  --text: #e8e8e8;
-  --muted: #a0a0a0;
-  --primary: #6c7cff; /* Your new blue */
-  --primary-2: #7ee7ff; /* Your new cyan */
-  --card-bg: linear-gradient(
-    135deg,
-    rgba(108, 124, 255, 0.06),
-    rgba(126, 231, 255, 0.04)
-  );
-  --border: rgba(108, 124, 255, 0.2);
-  --card: #111111; /* Kept from old file, but panel style overrides */
+  --bg: #0b0d12;
+  --bg-alt: #10141c;
+  --text: #e7eaf3;
+  --muted: #b9c0d0;
+  --primary: #7c5cff;
+  --primary-2: #5ad0ff;
+  --card: #141a24;
+  --border: #1d2430;
 }
 
 main {
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-  overflow-x: hidden; /* Prevents horizontal scroll from JS animations */
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 .section {
-  padding: 80px 16px; /* Updated padding */
+  padding: 72px 16px;
 }
 
 .section.alt {
@@ -35,191 +29,129 @@ main {
   margin: 0 auto;
 }
 
-/* =======================
-   Typography
-   ======================= */
-.section-title {
-  font-size: clamp(32px, 5vw, 48px); /* Matches your inline styles */
-  line-height: 1.1;
-  margin: 8px 0 16px;
-  letter-spacing: -0.02em;
-  font-weight: 900;
+.hero-inner {
+  display: grid;
+  place-items: center;
   text-align: center;
+  gap: 12px;
+}
+
+.hero-logo {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 20px rgba(124, 92, 255, 0.35));
+}
+
+.section-title {
+  font-size: 48px;
+  line-height: 1.1;
+  margin: 8px 0 4px;
+  letter-spacing: -0.02em;
 }
 
 .section-sub {
-  max-width: 720px;
+  max-width: 680px;
   color: var(--muted);
   font-size: 18px;
-  line-height: 1.6;
   margin: 0 auto 12px;
+}
+
+/* CTA */
+.cta {
   text-align: center;
 }
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-.hint {
-  color: var(--muted);
-  margin: 0;
-  line-height: 1.6;
-  font-size: 16px;
-}
-
-/* =======================
-   New Panel (Card) Style
-   ======================= */
-.panel {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px;
-  position: relative;
-  overflow: hidden;
-}
-
-.panel h3 {
-  margin: 0 0 12px;
-  font-size: 24px;
-  font-weight: 800;
-}
-
-.panel-icon {
-  width: 56px;
-  height: 56px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  border-radius: 16px;
+.cta-title {
+  font-size: 32px;
   margin-bottom: 16px;
-  font-size: 28px;
-  color: var(--bg-alt);
 }
-
-.panel-step-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+.cta-btn,
+.cta-btn.large {
+  display: inline-block;
+  padding: 10px 18px;
   border-radius: 999px;
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--bg-alt);
-  margin-bottom: 20px;
-}
-
-/* =======================
-   Buttons (from JSX)
-   ======================= */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 16px 32px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 18px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  border: 1px solid transparent; /* Placeholder for secondary */
-}
-
-.btn.primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  color: #0a0f24;
-  box-shadow: 0 6px 20px rgba(108, 124, 255, 0.35),
-    0 0 0 6px rgba(124, 139, 255, 0.15);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: transform 200ms ease, filter 200ms ease;
 }
-
-.btn.primary:hover {
+.cta-btn.large {
+  padding: 12px 22px;
+  font-size: 18px;
+}
+.cta-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(108, 124, 255, 0.45),
-    0 0 0 8px rgba(124, 139, 255, 0.2);
+  filter: brightness(1.05);
+}
+.cta-btn:active {
+  transform: translateY(0);
 }
 
-.btn.secondary {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: var(--text);
-}
-
-.btn.secondary:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* =======================
-   Grids (from JSX)
-   ======================= */
+/* Cards / Grid */
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 16px;
 }
-
-.grid-3,
-.grid3 {
-  /* Your JSX uses 'grid3' */
+@media (min-width: 900px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+.grid-3 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 16px;
+}
+@media (min-width: 900px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 20px; }
 }
 
-@media (min-width: 768px) {
-  .grid-2 {
-    grid-template-columns: 1fr 1fr;
-  }
-  .grid-3,
-  .grid3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+.card-title {
+  font-size: 24px;
+  margin: 0 0 8px;
+}
+.card-body {
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+.bullets {
+  padding-left: 18px;
+  margin: 0;
+}
+.bullets li {
+  margin: 6px 0;
 }
 
-/* =======================
-   Utilities (from JSX)
-   ======================= */
-.row {
-  display: flex;
-  align-items: center;
+/* Steps */
+.step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  text-align: left;
 }
-.row.between {
-  justify-content: space-between;
-}
-
-.label {
-  font-size: 16px;
+.step-num {
   font-weight: 700;
-}
-
-.badge {
-  padding: 6px 12px;
-  font-size: 11px;
-  border-radius: 8px;
-  font-weight: 600;
-  background: rgba(108, 124, 255, 0.15);
-  border: 1px solid rgba(108, 124, 255, 0.3);
   color: var(--primary-2);
+  margin-bottom: 6px;
+}
+.step-title {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+.step-body {
+  margin: 0;
+  color: var(--muted);
 }
 
-.divider {
-  height: 1px;
-  width: 100%;
-  background: var(--border);
-  margin: 12px 0;
-}
-
-/* =======================
-   Footer (Kept from original)
-   ======================= */
+/* Footer */
 .footer {
   border-top: 1px solid var(--border);
   background: #0a0e15;
@@ -294,4 +226,3 @@ main {
   .zoom-in { transform: scale(0.96); }
   .zoom-in.is-visible { transform: scale(1); }
 }
-

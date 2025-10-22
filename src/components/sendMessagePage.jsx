@@ -19,7 +19,9 @@ const ReplyIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="c
 
 // --- Main Component Styles ---
 const styles = {
-  page: { minHeight: '100vh', color: '#e2e8f0', fontFamily: "'Poppins', sans-serif", padding: '2rem', background: 'linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)), url(background-send-a-message.gif) center/cover no-repeat fixed', overflow: 'hidden' },  panel: { background: 'rgba(30, 41, 59, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(16px)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)' },
+  page: { minHeight: '100vh', color: '#e2e8f0', fontFamily: "'Poppins', sans-serif", padding: '2rem', background: '#020617', overflow: 'hidden' },
+  container: { maxWidth: '50rem', margin: '0 auto', transition: 'transform 0.1s ease-out' },
+  panel: { background: 'rgba(30, 41, 59, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(16px)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)' },
   tabContainer: { display: 'flex', borderTopLeftRadius: '0.75rem', borderTopRightRadius: '0.75rem', position: 'relative' },
   tabButton: { position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', padding: '1rem', fontWeight: '600', fontSize: '0.875rem', color: '#94a3b8', border: 'none', cursor: 'pointer', background: 'none', transition: 'color 0.3s ease' },
   tabButtonHover: { color: '#f8fafc' },
@@ -386,6 +388,27 @@ export default function SendMessagePage() {
     <div style={styles.page}>
       <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+          body::before, body::after {
+              content: '';
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100vw;
+              height: 100vh;
+              background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--color1) 0%, transparent 40%);
+              will-change: background;
+              z-index: -1;
+              animation: aurora 20s linear infinite;
+          }
+          body::before { --color1: #3b82f6; }
+          body::after { --color1: #8b5cf6; animation-delay: -10s; }
+
+          @keyframes aurora {
+              0%, 100% { --x: 20%; --y: 30%; }
+              25% { --x: 80%; --y: 40%; }
+              50% { --x: 70%; --y: 80%; }
+              75% { --x: 30%; --y: 70%; }
+          }
           @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.02); } } 
           @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>

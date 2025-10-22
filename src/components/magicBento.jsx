@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Reveal from "./reveal";
+import Reveal from "react";
 
 /** Generic clickable bento item
  * - Uses <Link> when `to` is provided
