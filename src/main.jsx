@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 import WalletConnectionProvider from "./solana/walletConnectionProvider.jsx";
+import "./config.js"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

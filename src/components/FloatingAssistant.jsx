@@ -3,9 +3,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 /** ---------------------------------------------------------
  * FloatingAIAssistant — Gemini (FREE models only)
- * Prefers: 1) 1.5-flash-8b  2) 1.5-flash-latest  3) 1.5-flash
- * - Uses ListModels to avoid 404s
- * - Streams when supported; falls back to non-stream
+ * - No model name shown in UI
+ * - FAQ buttons reveal local answers (no Gemini calls)
+ * - Gemini answers ONLY when the user types & sends
  * --------------------------------------------------------- */
 
 const FREE_ONLY = [
@@ -14,6 +14,34 @@ const FREE_ONLY = [
   "gemini-1.5-flash",
   "gemini-2.5-flash",
   "gemini-2.5-flash-lite",
+];
+
+// Edit these to match your site
+const FAQ = [
+  {
+    q: "What is OneForAll?",
+    a: "OneForAll is a playground for crypto-powered social apps and tools. You’ll find the Meme Battle, Market Pulse, wallet-gated features, and a lightweight AI assistant to help you around."
+  },
+  {
+    q: "How do I connect my Solana wallet?",
+    a: "Click the wallet button in the header and choose your wallet (e.g., Phantom). After approval, your address appears and you can access gated actions like uploading and voting."
+  },
+  {
+    q: "What is Meme Battle?",
+    a: "A community gallery where anyone can upload crypto-themed memes, vote on others, and climb the leaderboard. Images and captions are tied to wallet addresses for transparency."
+  },
+  {
+    q: "How do I upload a meme?",
+    a: "Open **Create Meme**, add a ticker (e.g., SOL), caption, and image, then submit. Your wallet must be connected to associate uploads with your address."
+  },
+  {
+    q: "How do votes work?",
+    a: "Each wallet can like a meme once. Votes are stored server-side and fetched by wallet and meme ID, then used to sort the gallery."
+  },
+  {
+    q: "What is Market Pulse?",
+    a: "A compact view of price and sentiment highlights for popular tickers. It’s a quick snapshot, not financial advice."
+  }
 ];
 
 export default function FloatingAIAssistant({
@@ -49,7 +77,8 @@ export default function FloatingAIAssistant({
       .fa-fab:active img{transform:translateY(0) scale(1);}
       .fa-overlay{position:fixed;inset:0;z-index:2147483100;background:radial-gradient(800px 380px at 70% 10%,rgba(108,124,255,.10),transparent 60%),rgba(6,10,22,0.46);backdrop-filter:blur(3px);}
       .fa-panel{position:fixed;right:16px;bottom:86px;z-index:2147483300;width:min(420px,92vw);max-height:min(72vh,680px);display:grid;grid-template-rows:auto 1fr auto;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0f1534,#0c122a);border:1px solid rgba(255,255,255,0.06);box-shadow:0 18px 60px rgba(0,0,0,.55),0 0 0 1px rgba(126,231,255,.03) inset;animation:fa-in .24s cubic-bezier(.22,.8,.34,1);}
-      @keyframes fa-in{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+      @keyframes fa-in{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}
+      }
       .fa-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));color:#e7ecff;}
       .fa-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;}
       .fa-logo{width:24px;height:24px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(108,124,255,.2));}
@@ -61,11 +90,7 @@ export default function FloatingAIAssistant({
       .fa-body::-webkit-scrollbar-track{background:transparent;}
       .fa-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:8px;border:2px solid transparent;background-clip:padding-box;}
       .fa-body::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.12);}
-<<<<<<< HEAD
-      .fa-msg{max-width:100%;padding:10px 12px;border-radius:12px;margin:6px 0;line-height:1.6;font-size:14px;overflow:hidden;word-wrap:break-word;overflow-wrap:break-word;}
-=======
-      .fa-msg{max-width:85%;padding:10px 12px;border-radius:12px;margin:6px 0;line-height:1.6;font-size:14px;}
->>>>>>> 3e76c714ca5b59cf027fe15d5f1076e4d692e0c7
+      .fa-msg{max-width:85%;padding:10px 12px;border-radius:12px;margin:6px 0;line-height:1.6;font-size:14px;overflow:hidden;word-wrap:break-word;overflow-wrap:break-word;}
       .fa-msg.user{margin-left:auto;background:rgba(124,139,255,.12);border:1px solid rgba(124,139,255,.18);color:#e7ecff;}
       .fa-msg.assistant{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,0.05);color:#e7ecff;}
       .fa-msg.assistant h1,.fa-msg.assistant h2,.fa-msg.assistant h3{margin:12px 0 8px;color:#7ee7ff;font-weight:700;}
@@ -81,7 +106,7 @@ export default function FloatingAIAssistant({
       .fa-msg.assistant strong{color:#6c7cff;font-weight:600;}
       .fa-msg.assistant a{color:#7ee7ff;text-decoration:underline;}
       .fa-err{color:#ffb4b4;font-size:13px;margin:6px 2px 0;}
-      .fa-foot{padding:10px 14px;border-top:1px solid rgba(255,255,255,.05);background:linear-gradient(0deg,rgba(255,255,255,.02),rgba(255,255,255,0));display:grid;gap:8px;}
+      .fa-foot{padding:10px 14px;border-top:1px solid rgba(255,255,255,.05);background:linear-gradient(0deg,rgba(255,255,255,.02),rgba(255,255,255,0));display:grid;gap:10px;}
       .fa-input{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,.04);border-radius:12px;padding:10px 12px;transition:all .2s;}
       .fa-input:focus-within{border-color:rgba(126,231,255,.20);box-shadow:0 0 0 3px rgba(124,139,255,0.15);}
       .fa-input textarea{all:unset;color:#e7ecff;font:inherit;font-size:14px;line-height:1.5;min-height:22px;max-height:120px;overflow:auto;width:100%;resize:none;}
@@ -92,6 +117,12 @@ export default function FloatingAIAssistant({
       .fa-btn[disabled]{opacity:.4;cursor:not-allowed;}
       .fa-hint{color:#a7b0d6;font-size:11px;margin:0;text-align:center;opacity:.8;}
       .fa-icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+      /* Bigger quick-question buttons */
+      .fa-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:0;margin-bottom:2px;}
+      .fa-chip{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.06);
+        padding:9px 14px;border-radius:999px;font-size:14px;color:#eaf4ff;cursor:pointer;transition:all .15s;}
+      .fa-chip:hover{background:rgba(126,231,255,.12);border-color:rgba(126,231,255,.35);color:#ffffff;}
+      .fa-chip:active{transform:translateY(1px);}
     `;
     document.head.appendChild(el);
   }, []);
@@ -189,6 +220,7 @@ export default function FloatingAIAssistant({
     return msg || "Request failed.";
   }
 
+  // ---- Gemini send: ONLY used when the user types & sends ----
   async function onSend() {
     const prompt = input.trim();
     if (!prompt || busy) return;
@@ -244,6 +276,12 @@ export default function FloatingAIAssistant({
     }
   }
 
+  // ---- FAQ chip: reveal local answer (no Gemini call) ----
+  function onFaqClick(item) {
+    const md = `**Q:** ${item.q}\n\n**A:** ${item.a}`;
+    setHistory((h) => [...h, { role: "assistant", content: md }]);
+  }
+
   function onKeyDown(e) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -251,17 +289,9 @@ export default function FloatingAIAssistant({
     }
   }
 
-  const headerRight = useMemo(() => {
-    if (resolving) return "Resolving free model…";
-    if (resolvedModel) return `Model: ${resolvedModel}${supportsStream ? " • streaming" : ""}`;
-    return "Model: —";
-  }, [resolvedModel, supportsStream, resolving]);
-
   function formatMessage(text) {
     if (!text) return text;
-
     let html = text;
-
     html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
     html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
@@ -274,18 +304,14 @@ export default function FloatingAIAssistant({
     html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
     html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
     html = html.replace(/\n\n/g, '</p><p>');
-
-    if (!html.startsWith('<')) {
-      html = '<p>' + html + '</p>';
-    }
-
+    if (!html.startsWith('<')) html = '<p>' + html + '</p>';
     return html;
   }
 
   return (
     <>
       {!open && (
-        <button className="fa-fab" onClick={() => setOpen(true)} title="AI Assistant">
+        <button className="fa-fab cursor-target" onClick={() => setOpen(true)} title="AI Assistant">
           <img src="/1fa-logo.png" alt="AI" />
         </button>
       )}
@@ -293,14 +319,14 @@ export default function FloatingAIAssistant({
       {open && (
         <>
           <div className="fa-overlay" onClick={() => setOpen(false)} />
-          <section className="fa-panel" role="dialog" aria-label="AI Assistant">
+          <section className="fa-panel cursor-target" role="dialog" aria-label="AI Assistant">
             <header className="fa-head">
               <div className="fa-title">
                 <img src="/1fa-logo.png" alt="" className="fa-logo" />
                 AI Assistant
               </div>
               <div className="fa-actions">
-                <span>{headerRight}</span>
+                {/* model name intentionally hidden */}
                 <button className="fa-x" onClick={() => setOpen(false)} aria-label="Close">×</button>
               </div>
             </header>
@@ -316,10 +342,19 @@ export default function FloatingAIAssistant({
                 </div>
               ))}
               {error && <div className="fa-err">⚠ {error}</div>}
-              {busy && <div className="fa-msg assistant">Thinking...</div>}
+              {busy && <div className="fa-msg assistant">{resolving ? "Setting up…" : "Thinking..."}</div>}
             </div>
 
             <footer className="fa-foot">
+              {/* Bigger FAQ buttons that reveal local answers */}
+              <div className="fa-chips">
+                {FAQ.map((item) => (
+                  <button key={item.q} className="fa-chip" onClick={() => onFaqClick(item)} title={item.q}>
+                    {item.q}
+                  </button>
+                ))}
+              </div>
+
               <div className="fa-input">
                 <textarea
                   ref={textRef}
@@ -336,7 +371,7 @@ export default function FloatingAIAssistant({
                 </button>
               </div>
               <div className="fa-hint">
-                {apiKey ? "Press Enter to send • Shift+Enter for new line" : "No API key detected"}
+                {apiKey ? "Tip: Click a FAQ button for a quick answer. Gemini replies only to typed messages." : "No API key detected"}
               </div>
             </footer>
           </section>
